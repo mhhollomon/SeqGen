@@ -1,13 +1,11 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+import SeqGen from "~/components/SeqGen";
+import Header from "~/components/header";
 
 export default function Home() {
-  return <Welcome />;
+    return (<>
+            <title>SeqGen</title>
+            <meta name="description" content="The aptly named Sequence Generator" />
+            <Header />
+            <SeqGen className="mt-5" />
+    </>);
 }

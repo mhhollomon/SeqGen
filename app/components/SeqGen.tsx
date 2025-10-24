@@ -1,0 +1,112 @@
+import { useAtom, useAtomValue } from "jotai";
+import { useState } from "react";
+import { durationSeqAtom, pitchNameSeqAtom, pitchNumberSeqAtom } from "~/atoms";
+import { cn, midiStringToNote } from "~/utils";
+import { Dialog } from "radix-ui";
+
+export default function SeqGen({ className }: { className?: string }) {
+    const pitchNames = useAtomValue(pitchNameSeqAtom);
+    const [pitchNumbers, setPitchNumbers] = useAtom(pitchNumberSeqAtom);
+    const [durations, setDurations] = useAtom(durationSeqAtom);
+
+    const [showGenerateModal, setShowGenerateModal] = useState(false);
+
+    function handleAddPitch() {
+        console.log("add pitch");
+        setPitchNumbers([...pitchNumbers, 200]);
+    }
+
+    function handleRemovePitch() {
+        console.log("remove pitch");
+        setPitchNumbers(pitchNumbers.slice(0, pitchNumbers.length - 1));
+    }
+
+    function handleAddDuration() {
+        console.log("add duration");
+        setDurations([...durations, 1]);
+    }
+
+    function handleRemoveDuration() {
+        console.log("remove duration");
+        setDurations(durations.slice(0, durations.length - 1));
+    }
+
+    function handleGenerate() {
+        setShowGenerateModal(true);
+    }
+
+    function handleChangePitch(event: React.KeyboardEvent<HTMLInputElement>, index: number) {
+        console.log("-- called");
+        if (! ["Enter", "Tab"].includes(event.key) ) {
+            return;
+        }
+        const pitch = event.currentTarget.value;
+        console.log(`index: ${index}, pitch: ${pitch}`);
+        const pitchNumber = midiStringToNote(pitch);
+        if (pitchNumber >= 0) {
+            console.log(`pitchNumber: ${pitchNumber}`);
+            const newPitches = pitchNumbers.slice();
+            newPitches[index] = pitchNumber;
+            console.log(`newPitches: ${newPitches}`);
+            setPitchNumbers(newPitches);
+        }
+    }
+
+    return (
+        <main className={cn("container", className)}>
+            <div className="container overflow-x-scroll mx-1">
+                <div className="gap-2 align-items-center" style={{ display: 'grid', gridTemplateColumns: '6em 2em repeat(auto-fill, minmax(5em, 1fr))' }}>
+                    <p className="p-0 m-0 fs-4 fw-bold text-end">Pitch</p>
+                    <div className="d-flex flex-column justify-content-center px-0">
+                        <button className="btn btn-primary btn-sm" onClick={handleAddPitch}><i className="bi bi-caret-up"></i></button>
+                        <button className="btn btn-primary btn-sm" onClick={handleRemovePitch}><i className="bi bi-caret-down"></i></button>
+                    </div>
+                    {pitchNames.map((pitchName, index) => (
+                        <input type="text" onKeyDown={(e) => handleChangePitch(e, index)}
+                        key={`${index}-${pitchName}`}
+                        className="p-2 border rounded"
+                        title="R for rest or a pitch and octave - C4 is middle C"
+                        pattern="R|([A-Ga-g](b|#)?(-1|0|1|2|3|4))"
+                        defaultValue={pitchName} />
+                    ))}
+
+                </div>
+                <div className="gap-2 align-items-center" style={{ display: 'grid', gridTemplateColumns: '6em 2em repeat(auto-fill, minmax(5em, 1fr))' }}>
+                    <p className="p-0 m-0 fs-4 fw-bold text-end">Duration</p>
+                    <div className="d-flex flex-column justify-content-center px-0 pt-2">
+                        <button className="btn btn-primary btn-sm" onClick={handleAddDuration}><i className="bi bi-caret-up"></i></button>
+                        <button className="btn btn-primary btn-sm" onClick={handleRemoveDuration}><i className="bi bi-caret-down"></i></button>
+                    </div>
+                    {durations.map((dur, index) => (
+                        <div key={`${index}-${dur}`} className="p-2 border rounded">{dur}</div>
+                    ))}
+
+                </div>
+            </div>
+
+            <div className="row mt-4">
+                <div className="col">
+                    <Dialog.Root open={showGenerateModal} onOpenChange={() => { setShowGenerateModal(!showGenerateModal) }}>
+                        <Dialog.Trigger asChild >
+                            <button className="btn btn-primary" onClick={handleGenerate}>Generate</button>
+                        </Dialog.Trigger>
+                        <Dialog.Portal>
+                            <Dialog.Overlay className="dialog-overlay" />
+                            <Dialog.Content className="align-content-center justify-content-center border dialog-content" >
+                                <Dialog.Title>Generated Sequence</Dialog.Title>
+                                <Dialog.Description>
+                                    <p>{pitchNumbers.join(", ")}</p>
+                                    <p>{durations.join(", ")}</p>
+                                </Dialog.Description>
+                                <Dialog.Close asChild>
+                                    <button className="btn btn-primary float-end" aria-label="Close">Close</button>
+                                </Dialog.Close>
+                            </Dialog.Content>
+                        </Dialog.Portal>
+                    </Dialog.Root>
+
+                </div>
+            </div>
+        </main>
+    );
+}

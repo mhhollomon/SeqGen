@@ -1,0 +1,47 @@
+@use "sass:map";
+
+$white: #ffffff;
+
+$theme-colors: (
+    "light":      #bab8c0,
+    "dark":       #050001,
+    "primary":    #2d471e,
+    "secondary":  #cfd7d8,
+    "info":       #0071d8,
+    "success":    #18b000,
+    "warning":    #fcc500,
+    "danger":     #f7004e,
+);
+
+@import "bootstrap/scss/bootstrap";
+
+
+.bg-gray {
+    background-color: map.get($theme-colors, "primary");
+    color : $white;
+}
+
+ .dialog-overlay {
+    z-index: 1;
+    position : absolute;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: 100dvw;
+    background-color: rgba(666, 666, 666, 0.7);
+    backdrop-filter: blur(20px);
+}
+
+[data-bs-theme="dark"] .dialog-overlay {
+    background-color:  rgba(0, 0, 0, 0.3);
+}
+
+.dialog-content {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius : var(--bs-border-radius-2xl);
+    padding : $spacer * 1.5;
+}
