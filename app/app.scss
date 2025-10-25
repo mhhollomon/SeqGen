@@ -1,5 +1,8 @@
 @use "sass:map";
 
+@import "../node_modules/bootstrap/scss/functions";
+
+
 $white: #ffffff;
 
 $theme-colors: (
@@ -13,8 +16,24 @@ $theme-colors: (
     "danger":     #f7004e,
 );
 
-@import "bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
 
+
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/root";
+
+@import "../node_modules/bootstrap/scss/utilities";
+@import "../node_modules/bootstrap/scss/reboot";
+//@import "../node_modules/bootstrap/scss/type";
+//@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/helpers";
+@import "../node_modules/bootstrap/scss/buttons";
+
+@import "../node_modules/bootstrap/scss/utilities/api";
 
 .bg-gray {
     background-color: map.get($theme-colors, "primary");
@@ -44,4 +63,27 @@ $theme-colors: (
     transform: translate(-50%, -50%);
     border-radius : var(--bs-border-radius-2xl);
     padding : $spacer * 1.5;
+}
+
+.btn-tiny {
+    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .75rem;
+}
+
+.second-row {
+    grid-row : 2;
+}
+
+.third-row {
+    grid-row : 3;
+}
+
+.middle-of-row {
+    margin-bottom: 1rem;
+    margin-top: 1rem
+}
+
+.w-5rem {
+    width: 5rem;
 }

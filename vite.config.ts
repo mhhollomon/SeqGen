@@ -5,6 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
     plugins: [reactRouter(), tsconfigPaths()],
     css: {
+        transformer: 'lightningcss',
         preprocessorOptions: {
             scss: {
                 silenceDeprecations: [
@@ -14,5 +15,8 @@ export default defineConfig({
                 ],
             },
         },
+    },
+    build: {
+        cssMinify: 'lightningcss', // Use Lightning CSS for CSS minification during build
     },
 });
