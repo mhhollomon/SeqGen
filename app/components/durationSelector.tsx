@@ -3,25 +3,24 @@ import { durationSeqAtom } from "~/atoms";
 import { durationList, type Duration } from "~/durations";
 
 export type DurationSelectorProps = {
-    index : number;
-    dur : Duration;
+    slot : number;
+    list : Duration[];
+    value : Duration;
+    onChange : (key : number, value : number) => void;
 }
 
-export default function DurationSelector({ index, dur } : DurationSelectorProps) {
-    const [durations, setDurations] = useAtom(durationSeqAtom);
+export default function DurationSelector({ slot, list, value, onChange } : DurationSelectorProps) {
 
     return (
-        <select key={`select-${index}`}
+        <select key={`select-${slot}`}
             className="form-select p-2 border rounded middle-of-row second-row w-5rem"
-            value={dur.id}
+            value={value.id}
             onChange={(e) => {
                 const new_value = parseInt(e.currentTarget.value);
-                const new_durations = durations.slice();
-                new_durations[index] = new_value;
-                setDurations(new_durations);
+                onChange(slot, new_value);
             }}
             aria-label="Duration selection">
-        {durationList.map((d) => {
+        {list.map((d) => {
             return (
                 <option key={d.id} value={d.id}>{d.name}</option>
             );

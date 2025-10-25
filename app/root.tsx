@@ -13,6 +13,7 @@ import type { Route } from "./+types/root";
 import "./app.scss";
 import { useAtomValue } from "jotai";
 import { themeAtom } from "~/atoms";
+import { Tooltip } from "radix-ui";
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -49,7 +50,9 @@ export default function App() {
     const theme = useAtomValue(themeAtom);
 
     return(
+        <Tooltip.Provider>
         <Outlet />
+        </Tooltip.Provider>
     );
 }
 

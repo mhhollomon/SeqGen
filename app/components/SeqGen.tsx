@@ -5,6 +5,8 @@ import { cn, midiStringToNote } from "~/utils";
 import { Dialog } from "radix-ui";
 import { durationList, type Duration } from "~/durations";
 import DurationSelector from "~/components/durationSelector";
+import { InfoTip } from "~/components/infoTip";
+import VelocitySelector from "~/components/velocitySelector";
 
 
 export type SeqGenProps = {
@@ -43,6 +45,13 @@ export default function SeqGen({ className }: SeqGenProps) {
         setDurations(durations.slice(0, -1));
     }
 
+    function handleChangeDuration(key: number, value: number) {
+        console.log(`key: ${key}, value: ${value}`);
+        const newDurations = durations.slice();
+        newDurations[key] = value;
+        setDurations(newDurations);
+    }
+
     function handleAddVelocity() {
         console.log("add velocity");
         setVelocity([...velocity, velocity[-1]]);
@@ -52,6 +61,13 @@ export default function SeqGen({ className }: SeqGenProps) {
         console.log("remove velocity");
         if (velocity.length <= 1) return;
         setVelocity(velocity.slice(0, -1));
+    }
+
+    function handleChangeVelocity(slot: number, value: number) {
+        console.log(` velocity == slot: ${slot}, value: ${value}`);
+        const newVelocity = velocity.slice();
+        newVelocity[slot] = value;
+        setVelocity(newVelocity);
     }
 
     function handleGenerate() {
@@ -77,7 +93,7 @@ export default function SeqGen({ className }: SeqGenProps) {
 
 
     const label_grid_style = { display: 'grid',
-        gridTemplateColumns: '7rem 1.5rem',
+        gridTemplateColumns: '8rem 1.5rem',
         gridTemplateRows: 'repeat(auto-fill, 4rem)',
         gridGap: '0.5rem',
         borderRight : '3px solid black',
@@ -95,23 +111,23 @@ export default function SeqGen({ className }: SeqGenProps) {
     return (
         <main className={cn("container d-flex", className)}>
             {/* -- labels -- */}
-            <div  style={{height: '16rem', width: '10rem'}}>
+            <div  style={{height: '16rem', width: '11rem'}}>
                 <div style={label_grid_style}>
-                    <p className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch</p>
+                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch<InfoTip>Use the arrow keys to select a pitch</InfoTip></div>
                     <div className="d-flex flex-column justify-content-center px-0">
                         <button className="btn btn-primary btn-tiny px-0" onClick={handleAddPitch}><i className="bi bi-caret-up"></i></button>
                         <button className="btn btn-primary btn-tiny px-0" onClick={handleRemovePitch}><i className="bi bi-caret-down"></i></button>
                     </div>
                 </div>
                 <div style={label_grid_style}>
-                    <p className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration</p>
+                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration<InfoTip>Each box is a selector. Click to change the duration.</InfoTip></div>
                     <div className="d-flex flex-column justify-content-center px-0">
                         <button className="btn btn-primary btn-tiny px-0" onClick={handleAddDuration}><i className="bi bi-caret-up"></i></button>
                         <button className="btn btn-primary btn-tiny px-0" onClick={handleRemoveDuration}><i className="bi bi-caret-down"></i></button>
                     </div>
                 </div>
                 <div style={label_grid_style}>
-                    <p className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity</p>
+                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity<InfoTip>Each box turns into a slider. Click to change the velocity.</InfoTip></div>
                     <div className="d-flex flex-column justify-content-center px-0">
                         <button className="btn btn-primary btn-tiny px-0" onClick={handleAddVelocity}><i className="bi bi-caret-up"></i></button>
                         <button className="btn btn-primary btn-tiny px-0" onClick={handleRemoveVelocity}><i className="bi bi-caret-down"></i></button>
@@ -130,12 +146,16 @@ export default function SeqGen({ className }: SeqGenProps) {
                         defaultValue={pitchName} />
                     ))}
 
+
                     {durations.map((dur, index) => {
                         const dur_obj = durationList[dur];
-                        return <DurationSelector key={`${index}-${dur}`} index={index} dur={dur_obj} />
+                        return <DurationSelector key={`${index}-${dur}`} slot={index}
+                                    list={durationList} value={dur_obj} onChange={handleChangeDuration} />
                     })}
+
+
                     {velocity.map((vel, index) => (
-                        <div key={`${index}-${vel}`} className="p-2 border rounded middle-of-row third-row w-5rem">{vel}</div>
+                        <VelocitySelector key={`${index}-${vel}`} slot={index} value={vel} onChange={handleChangeVelocity} />
                     ))}
                 </div>
 
