@@ -18,7 +18,7 @@ export default function VelocitySelector({ slot, value, onChange }: VelocitySele
     return (
         <Popover.Root >
             <Popover.Trigger asChild>
-                <button className="IconButton p-2 border rounded middle-of-row third-row w-5rem" aria-label="Update dimensions">
+                <button className="p-2 border rounded middle-of-row third-row w-5rem" aria-label="Update dimensions">
                     {value}
                 </button>
             </Popover.Trigger>
