@@ -45,10 +45,10 @@ export default function SeqGen({ className }: SeqGenProps) {
         setDurations(durations.slice(0, -1));
     }
 
-    function handleChangeDuration(key: number, value: number) {
-        console.log(`key: ${key}, value: ${value}`);
+    function handleChangeDuration(slot: number, value: number) {
+        console.log(`handleChangeDuration == key: ${slot}, value: ${value}`);
         const newDurations = durations.slice();
-        newDurations[key] = value;
+        newDurations[slot] = value;
         setDurations(newDurations);
     }
 
@@ -64,7 +64,7 @@ export default function SeqGen({ className }: SeqGenProps) {
     }
 
     function handleChangeVelocity(slot: number, value: number) {
-        console.log(` velocity == slot: ${slot}, value: ${value}`);
+        console.log(`handleChangeVelocity == slot: ${slot}, value: ${value}`);
         const newVelocity = velocity.slice();
         newVelocity[slot] = value;
         setVelocity(newVelocity);
@@ -136,7 +136,7 @@ export default function SeqGen({ className }: SeqGenProps) {
             </div>
 
             <div  className="col flex-grow overflow-hidden pe-5">
-                <div className="w-100 overflow-x-scroll mx-1" style={grid_style}>
+                <div className="w-100 overflow-x-scroll mx-1 ps-1" style={grid_style}>
                     {pitchNames.map((pitchName, index) => (
                         <input type="text" onKeyDown={(e) => handleChangePitch(e, index)}
                         key={`${index}-${pitchName}`}
