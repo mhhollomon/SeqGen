@@ -1,7 +1,8 @@
 import { atom } from "jotai";
+import { Pitch } from "~/types/pitch";
 import { midiNoteToString } from "~/utils";
 
-import { durationList } from "~/durations";
+import { durationList } from "~/types/durations";
 
 // ---- THEME SUPPORT ----
 export const themes = ["light", "dark"];
@@ -16,14 +17,17 @@ export const themeAtom = atom(
 
 // ---------- PITCH ------------ //
 // Midi note number
-export const pitchNumberSeqAtom = atom<number[]>([64, 62, 60, 62, 64, 64, 64, 200]);
+export const pitchSeqAtom = atom<Pitch[]>([
+    new Pitch(64), new Pitch(62), new Pitch(60),
+    new Pitch(62), new Pitch(64),
+    new Pitch(64), new Pitch(64), new Pitch()]);
 // Read only Name
 export const pitchNameSeqAtom = atom<string[]>(
-    (get) => get(pitchNumberSeqAtom).map(midiNoteToString)
+    (get) => get(pitchSeqAtom).map((p) => p.toString())
 );
 // Read only length
 export const pitchSeqCountAtom = atom<number>(
-    (get) => get(pitchNumberSeqAtom).length
+    (get) => get(pitchSeqAtom).length
 );
 
 // ---------- DURATION ------------ //
