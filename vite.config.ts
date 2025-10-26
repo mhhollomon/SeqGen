@@ -2,21 +2,25 @@ import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
-    plugins: [reactRouter(), tsconfigPaths()],
-    css: {
-        transformer: 'lightningcss',
-        preprocessorOptions: {
-            scss: {
-                silenceDeprecations: [
-                    'import',
-                    'color-functions',
-                    'global-builtin',
-                ],
+export default defineConfig(({command, mode}) => {
+    const isProduction = command === 'build' && mode === 'production';
+    return {
+        base: (isProduction ? '/SeqGen/' : './'),
+        plugins: [reactRouter(), tsconfigPaths()],
+        css: {
+            transformer: 'lightningcss',
+            preprocessorOptions: {
+                scss: {
+                    silenceDeprecations: [
+                        'import',
+                        'color-functions',
+                        'global-builtin',
+                    ],
+                },
             },
         },
-    },
-    build: {
-        cssMinify: 'lightningcss', // Use Lightning CSS for CSS minification during build
-    },
-});
+        build: {
+            outDir: 'build-web-deploy',
+            cssMinify: 'lightningcss', // Use Lightning CSS for CSS minification during build
+        },
+}});
