@@ -46,6 +46,7 @@ echo "####################################################################"
 (
 cd ${OUTPUT_REPO_DIR} || { echo "ERROR - could not chdir to ${OUTPUT_REPO_DIR}"; exit 4; }
 rm -rf assets *
+rm -f .dockerignore .gitignore .editorconfig .gitattributes
 )
 
 # The 404 page used for gh-pages isn't really a part of the build.
@@ -61,6 +62,7 @@ cp -r *  ${OUTPUT_REPO_DIR}
 
 (
 cd ${OUTPUT_REPO_DIR} || { echo "ERROR - could not chdir to ${OUTPUT_REPO_DIR}"; exit 4; }
+touch .nojekyll
 git add -A
 git status
 )
