@@ -93,7 +93,7 @@ export default function SeqGen({ className }: SeqGenProps) {
     };
     const grid_style = {
         display: 'grid',
-        gridGap: '0.5rem',
+        gridGap: '1rem',
         marginRight: '1rem',
         gridTemplateColumns: 'repeat(auto-fill, 5rem)',
         gridTemplateRows: 'repeat(auto-fill, 4rem)',

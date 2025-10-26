@@ -18,7 +18,8 @@ export default function Header() {
 
     return (
         <header className="d-flex justify-content-between align-items-center w-100 mb-3 bg-gray">
-            <p className="my-0 mx-3 align-content-center">SeqGen</p>
+            <img src="/IMG_9131.png" width="40" height="40" className="d-inline-block align-text-top ms-3"></img>
+            <p className="my-0 mx-3 align-content-center fs-3">SeqGen</p>
             <button className="btn btn-secondary mx-3 my-2" onClick={handleClick}><i className={iconClasses}></i>{nextTheme}</button>
         </header>
     );
