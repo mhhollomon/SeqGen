@@ -3,9 +3,9 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({command, mode}) => {
-    const isProduction = command === 'build' && mode === 'production';
+    const isProduction = (command === 'build' && mode === 'production');
     return {
-        base: (isProduction ? '/SeqGen/' : './'),
+        base: (isProduction ? '/SeqGen/' : ''),
         plugins: [reactRouter(), tsconfigPaths()],
         css: {
             transformer: 'lightningcss',
@@ -21,6 +21,6 @@ export default defineConfig(({command, mode}) => {
         },
         build: {
             outDir: 'build-web-deploy',
-            cssMinify: 'lightningcss', // Use Lightning CSS for CSS minification during build
+            cssMinify: 'lightningcss',
         },
 }});

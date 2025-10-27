@@ -80,14 +80,32 @@ $theme-colors: (
     grid-row : 3;
 }
 
-.middle-of-row {
+@mixin grid-item {
     display: inline-flex;
-    margin-bottom: 1rem;
     height: 2rem;
-    margin-top: 1rem;
 	align-items: center;
 	justify-content: center;
     width : 5rem;
+
+}
+.middle-of-row {
+    @include grid-item;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.pitch-grid-button {
+    @include grid-item;
+}
+
+.pitch-grid-button.selected {
+    background-color: map.get($theme-colors, "primary");
+    color : $white;
+}
+
+.pitch-grid-button:hover {
+    background-color: map.get($theme-colors, "light");
+    color : $white;
 }
 
 .w-5rem {

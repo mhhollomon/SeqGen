@@ -1,6 +1,7 @@
 import { Popover } from "radix-ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Pitch } from "~/types/pitch";
+import { cn } from "~/utils";
 
 export type PitchSelectorProps = {
     slot: number;
@@ -11,6 +12,10 @@ export type PitchSelectorProps = {
 export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorProps) {
     const [localValue, setLocalValue] = useState(pitch);
     const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        setLocalValue(pitch);
+    }, [pitch, show]);
 
     function closeAndCommit() {
         onChange(slot, localValue.midiValue);
@@ -30,6 +35,9 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
         console.log(`pitchClass newPitch: ${JSON.stringify(newPitch)}`);
         setLocalValue(newPitch);
     }
+
+    const grid_classes = "btn-bg p-2 border rounded pitch-grid-button";
+    const pitch_class = localValue.isRest() ? "R" : localValue.pitchClass;
 
     return (
         <Popover.Root modal={true} open={show} onOpenChange={setShow}>
@@ -52,27 +60,27 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
                         <table className="p-2">
                             <tbody>
                             <tr>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("C")}>C</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("C#")}>C#</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("D")}>D</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='C' ? 'selected' : undefined)} onClick={() => handlePitchChange("C")}>C</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='C#' ? 'selected' : undefined)} onClick={() => handlePitchChange("C#")}>C#</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='D' ? 'selected' : undefined)} onClick={() => handlePitchChange("D")}>D</button></td>
                             </tr>
                             <tr>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("D#")}>D#</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("E")}>E</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("F")}>F</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='D#' ? 'selected' : undefined)} onClick={() => handlePitchChange("D#")}>D#</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='E' ? 'selected' : undefined)} onClick={() => handlePitchChange("E")}>E</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='F' ? 'selected' : undefined)} onClick={() => handlePitchChange("F")}>F</button></td>
                             </tr>
                             <tr>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("F#")}>F#</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("G")}>G</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("G#")}>G#</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='F#' ? 'selected' : undefined)} onClick={() => handlePitchChange("F#")}>F#</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='G' ? 'selected' : undefined)} onClick={() => handlePitchChange("G")}>G</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='G#' ? 'selected' : undefined)} onClick={() => handlePitchChange("G#")}>G#</button></td>
                             </tr>
                             <tr>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("A")}>A</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("A#")}>A#</button></td>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("B")}>B</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='A' ? 'selected' : undefined)} onClick={() => handlePitchChange("A")}>A</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='A#' ? 'selected' : undefined)} onClick={() => handlePitchChange("A#")}>A#</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='B' ? 'selected' : undefined)} onClick={() => handlePitchChange("B")}>B</button></td>
                             </tr>
                             <tr>
-                                <td><button className="btn-bg p-2 border rounded middle-of-row" onClick={() => handlePitchChange("R")}>Rest</button></td>
+                                <td><button className={cn(grid_classes, pitch_class==='R' ? 'selected' : undefined)} onClick={() => handlePitchChange("R")}>Rest</button></td>
                             </tr>
                             </tbody>
                         </table>
