@@ -1,6 +1,6 @@
 import type { Config } from "@react-router/dev/config";
 
-const basename = import.meta.env.BASE_URL;
+const basename = (import.meta.env.MODE === 'production') ? '/SeqGen/' : '';
 
 console.log(`basename: ${basename}`);
 

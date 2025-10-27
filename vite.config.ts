@@ -4,8 +4,12 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({command, mode}) => {
     const isProduction = (command === 'build' && mode === 'production');
+
+    console.log(`isProduction: ${isProduction}`);
+
     return {
         base: (isProduction ? '/SeqGen/' : ''),
+        baseUrl: (isProduction ? '/SeqGen/' : ''),
         plugins: [reactRouter(), tsconfigPaths()],
         css: {
             transformer: 'lightningcss',
