@@ -1,12 +1,14 @@
 import { useAtomValue } from "jotai";
 import { Dialog } from "radix-ui";
 import { useRef, useState } from "react";
-import { pitchSeqAtom, durationSeqAtom, velocitySeqAtom } from "~/atoms";
+import { durationSeqAtom, velocitySeqAtom } from "~/atoms";
 import { generateMidi } from "~/midifile";
 import { durationList } from "~/types/durations";
+import  STORE from "~/globalStore";
 
 export default function MidiDialog() {
-    const pitches = useAtomValue(pitchSeqAtom);
+
+    const pitches = STORE((state) => state.pitches);
     const durations = useAtomValue(durationSeqAtom);
     const velocity = useAtomValue(velocitySeqAtom);
 

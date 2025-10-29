@@ -1,45 +1,32 @@
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useState } from "react";
-import { durationSeqAtom, pitchNameSeqAtom, pitchSeqAtom, velocitySeqAtom } from "~/atoms";
-import { cn, midiStringToNote } from "~/utils";
-import { Dialog } from "radix-ui";
-import { durationList, type Duration } from "~/types/durations";
+import { durationSeqAtom, velocitySeqAtom } from "~/atoms";
+import { cn } from "~/utils";
+import { durationList } from "~/types/durations";
 import DurationSelector from "~/components/durationSelector";
 import { InfoTip } from "~/components/infoTip";
 import VelocitySelector from "~/components/velocitySelector";
-import { Pitch } from "~/types/pitch";
 import PitchSelector from "~/components/pitchSelector";
 import MidiDialog from "~/components/midiDialog";
-
+import STORE from '~/globalStore';
+import { useStore } from "zustand";
 
 export type SeqGenProps = {
     className?: string
 }
 
 export default function SeqGen({ className }: SeqGenProps) {
-    const [pitches, setPitches] = useAtom(pitchSeqAtom);
+    const pitches = useStore(STORE, (state) => state.pitches);
+    const addPitch = useStore(STORE, (state) => state.addPitch);
+    const removePitch = useStore(STORE, (state) => state.removePitch);
+    const updatePitch = useStore(STORE, (state) => state.updatePitch);
+
+
     const [durations, setDurations] = useAtom(durationSeqAtom);
     const [velocity, setVelocity] = useAtom(velocitySeqAtom);
 
     const [showGenerateModal, setShowGenerateModal] = useState(false);
 
-    function handleAddPitch() {
-        console.log("add pitch");
-        setPitches([...pitches, new Pitch()]);
-    }
-
-    function handleRemovePitch() {
-        console.log("remove pitch");
-        if (pitches.length <= 1) return;
-        setPitches(pitches.slice(0, pitches.length - 1));
-    }
-
-    function handleChangePitch(slot: number, value: number) {
-        console.log(`handleChangePitch == key: ${slot}, value: ${value}`);
-        const newPitches = pitches.slice();
-        newPitches[slot] = new Pitch(value);
-        setPitches(newPitches);
-    }
 
     function handleAddDuration() {
         console.log("add duration");
@@ -107,10 +94,10 @@ export default function SeqGen({ className }: SeqGenProps) {
             {/* -- labels -- */}
             <div  style={{height: '16rem', width: '11rem'}}>
                 <div style={label_grid_style}>
-                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch<InfoTip>Use the arrow keys to select a pitch</InfoTip></div>
+                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch<InfoTip>Each box is a selector. Click to change the pitch</InfoTip></div>
                     <div className="d-flex flex-column justify-content-center px-0">
-                        <button className="btn btn-primary btn-tiny px-0" onClick={handleAddPitch}><i className="bi bi-caret-up"></i></button>
-                        <button className="btn btn-primary btn-tiny px-0" onClick={handleRemovePitch}><i className="bi bi-caret-down"></i></button>
+                        <button className="btn btn-primary btn-tiny px-0" onClick={addPitch}><i className="bi bi-caret-up"></i></button>
+                        <button className="btn btn-primary btn-tiny px-0" onClick={removePitch}><i className="bi bi-caret-down"></i></button>
                     </div>
                 </div>
                 <div style={label_grid_style}>
@@ -132,7 +119,7 @@ export default function SeqGen({ className }: SeqGenProps) {
             <div  className="col flex-grow overflow-hidden pe-5">
                 <div className="w-100 overflow-x-scroll mx-1 ps-1" style={grid_style}>
                     {pitches.map((pitch, index) => (
-                        <PitchSelector key={`${index}-${pitch}`} slot={index} pitch={pitch} onChange={handleChangePitch} />
+                        <PitchSelector key={`${index}-${pitch}`} slot={index} pitch={pitch} onChange={updatePitch} />
                     ))}
 
 

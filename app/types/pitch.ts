@@ -33,6 +33,10 @@ export class Pitch implements PitchValue {
         this.pitchClass = pitchClass;
         this.octave = octave ?? 4;
     }
+    clone() : Pitch {
+        console.log(`clone: ${JSON.stringify(this)}`);
+        return new Pitch(this.midiValue, this.pitchClass, this.octave);
+    }
 
     isRest() : boolean {
         return this.pitchClass === "R";
