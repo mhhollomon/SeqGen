@@ -1,21 +1,27 @@
-import { useAtom } from "jotai";
-import {  themeIndexAtom, themes } from "~/atoms";
+import { useEffect, useState } from "react";
+import  useGlobalStore  from "~/globalStore";
+import { themes } from "~/types/theme";
+
 
 export default function Header() {
-
-    const [themeIndex, setThemeIndex] = useAtom(themeIndexAtom);
+    const { theme, setTheme } = useGlobalStore();
 
     const image_src =   import.meta.env.BASE_URL + "IMG_9131.png";
 
+    useEffect(() => {
+        console.log(`setting theme: ${theme}`);
+        document.documentElement.setAttribute('data-bs-theme', theme);
+    }, [theme]);
+
     function handleClick() {
+        const themeIndex = themes.indexOf(theme);
         const newIndex = (themeIndex + 1) % themes.length;
-        setThemeIndex(newIndex);
         const newTheme = themes[newIndex];
+        setTheme(newTheme);
         console.log(`newTheme : ${newTheme}, index : ${newIndex}`);
-        document.documentElement.setAttribute('data-bs-theme', newTheme)
     }
 
-    const nextTheme = themes[(themeIndex + 1) % themes.length];
+    const nextTheme = themes[(themes.indexOf(theme) + 1) % themes.length];
     const iconClasses = "me-1 bi bi-" + (nextTheme === "light" ? "brightness-high-fill" : "moon-stars");
 
     return (

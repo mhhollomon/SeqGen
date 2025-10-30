@@ -1,5 +1,3 @@
-import { useAtom } from "jotai";
-import { durationSeqAtom, velocitySeqAtom } from "~/atoms";
 import { cn } from "~/utils";
 import { durationList } from "~/types/durations";
 import DurationSelector from "~/components/durationSelector";
@@ -9,6 +7,7 @@ import PitchSelector from "~/components/pitchSelector";
 import GenerateMidiDialog from "~/components/generateMidiDialog";
 import useGlobalStore from '~/globalStore';
 import { Pitch } from "~/types/pitch";
+import History from "~/components/history";
 
 export type SeqGenProps = {
     className?: string
@@ -20,49 +19,16 @@ export default function SeqGen({ className }: SeqGenProps) {
     const removePitch = useGlobalStore((state) => state.removePitch);
     const updatePitch = useGlobalStore((state) => state.updatePitch);
 
-    console.log(`pitches: ${JSON.stringify(pitches)}`);
+    const durations = useGlobalStore((state) => state.durations);
+    const addDuration = useGlobalStore((state) => state.addDuration);
+    const removeDuration = useGlobalStore((state) => state.removeDuration);
+    const updateDuration = useGlobalStore((state) => state.updateDuration);
 
+    const velocities = useGlobalStore((state) => state.velocities);
+    const addVelocity = useGlobalStore((state) => state.addVelocity);
+    const removeVelocity = useGlobalStore((state) => state.removeVelocity);
+    const updateVelocity = useGlobalStore((state) => state.updateVelocity);
 
-    const [durations, setDurations] = useAtom(durationSeqAtom);
-    const [velocity, setVelocity] = useAtom(velocitySeqAtom);
-
-    function handleAddDuration() {
-        console.log("add duration");
-        const new_value = durations.at(-1);
-        console.log(`new_value: ${new_value}`);
-        setDurations([...durations, durations.at(-1) ?? 0]);
-    }
-
-    function handleRemoveDuration() {
-        console.log("remove duration");
-        if (durations.length <= 1) return;
-        setDurations(durations.slice(0, -1));
-    }
-
-    function handleChangeDuration(slot: number, value: number) {
-        console.log(`handleChangeDuration == key: ${slot}, value: ${value}`);
-        const newDurations = durations.slice();
-        newDurations[slot] = value;
-        setDurations(newDurations);
-    }
-
-    function handleAddVelocity() {
-        console.log("add velocity");
-        setVelocity([...velocity, velocity.at(-1) ?? 100]);
-    }
-
-    function handleRemoveVelocity() {
-        console.log("remove velocity");
-        if (velocity.length <= 1) return;
-        setVelocity(velocity.slice(0, -1));
-    }
-
-    function handleChangeVelocity(slot: number, value: number) {
-        console.log(`handleChangeVelocity == slot: ${slot}, value: ${value}`);
-        const newVelocity = velocity.slice();
-        newVelocity[slot] = value;
-        setVelocity(newVelocity);
-    }
 
     const label_grid_style = { display: 'grid',
         gridTemplateColumns: '8rem 1.5rem',
@@ -82,6 +48,12 @@ export default function SeqGen({ className }: SeqGenProps) {
 
     return (
         <main className={cn("container d-flex flex-column", className)}>
+            <section className="SettingsSection row mt-4">
+                <div className="col">
+                    <History />
+                </div>
+            </section>
+
 
             <section className="SequenceSection d-flex">
             {/* -- labels -- */}
@@ -96,15 +68,15 @@ export default function SeqGen({ className }: SeqGenProps) {
                 <div style={label_grid_style}>
                     <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration<InfoTip>Each box is a selector. Click to change the duration.</InfoTip></div>
                     <div className="d-flex flex-column justify-content-center px-0">
-                        <button className="btn btn-primary btn-tiny px-0" onClick={handleAddDuration}><i className="bi bi-caret-up"></i></button>
-                        <button className="btn btn-primary btn-tiny px-0" onClick={handleRemoveDuration}><i className="bi bi-caret-down"></i></button>
+                        <button className="btn btn-primary btn-tiny px-0" onClick={addDuration}><i className="bi bi-caret-up"></i></button>
+                        <button className="btn btn-primary btn-tiny px-0" onClick={removeDuration}><i className="bi bi-caret-down"></i></button>
                     </div>
                 </div>
                 <div style={label_grid_style}>
                     <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity<InfoTip>Each box turns into a slider. Click to change the velocity.</InfoTip></div>
                     <div className="d-flex flex-column justify-content-center px-0">
-                        <button className="btn btn-primary btn-tiny px-0" onClick={handleAddVelocity}><i className="bi bi-caret-up"></i></button>
-                        <button className="btn btn-primary btn-tiny px-0" onClick={handleRemoveVelocity}><i className="bi bi-caret-down"></i></button>
+                        <button className="btn btn-primary btn-tiny px-0" onClick={addVelocity}><i className="bi bi-caret-up"></i></button>
+                        <button className="btn btn-primary btn-tiny px-0" onClick={removeVelocity}><i className="bi bi-caret-down"></i></button>
                     </div>
                 </div>
             </div>
@@ -121,12 +93,12 @@ export default function SeqGen({ className }: SeqGenProps) {
                     {durations.map((dur, index) => {
                         const dur_obj = durationList[dur];
                         return <DurationSelector key={`${index}-${dur}`} slot={index}
-                                    list={durationList} value={dur_obj} onChange={handleChangeDuration} />
+                                    list={durationList} value={dur_obj} onChange={updateDuration} />
                     })}
 
 
-                    {velocity.map((vel, index) => (
-                        <VelocitySelector key={`${index}-${vel}`} slot={index} value={vel} onChange={handleChangeVelocity} />
+                    {velocities.map((vel, index) => (
+                        <VelocitySelector key={`${index}-${vel}`} slot={index} value={vel} onChange={updateVelocity} />
                     ))}
                 </div>
 

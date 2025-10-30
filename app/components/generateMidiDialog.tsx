@@ -1,17 +1,16 @@
-import { useAtomValue } from "jotai";
 import { Dialog } from "radix-ui";
 import { useRef, useState } from "react";
-import { durationSeqAtom, velocitySeqAtom } from "~/atoms";
 import { generateMidi } from "~/midifile";
 import { durationList } from "~/types/durations";
 import  useGlobalStore from "~/globalStore";
+import { Pitch } from "~/types/pitch";
 
 export default function GenerateMidiDialog() {
 
     const pitches = useGlobalStore((state) => state.pitches);
+    const durations = useGlobalStore((state) => state.durations);
+    const velocities = useGlobalStore((state) => state.velocities);
 
-    const durations = useAtomValue(durationSeqAtom);
-    const velocity = useAtomValue(velocitySeqAtom);
 
     const nameRef = useRef<HTMLInputElement>(null);
 
@@ -19,7 +18,7 @@ export default function GenerateMidiDialog() {
 
     function generateFile() {
         const durationValues = durations.map((d) => durationList[d].value);
-        const midi = generateMidi(pitches, durationValues, velocity, bpm);
+        const midi = generateMidi(pitches.map((p) => new Pitch(p.midiValue)), durationValues, velocities, bpm);
         const fileName = nameRef.current?.value ?? "my_midi.mid";
         const link = document.createElement("a");
         link.href = midi;
@@ -31,7 +30,7 @@ export default function GenerateMidiDialog() {
     return (<>
         <Dialog.Root >
             <Dialog.Trigger asChild >
-                <button className="btn btn-primary" >Generate</button>
+                <button className="btn btn-primary" >Generate Midi</button>
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="dialog-overlay" />
