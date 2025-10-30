@@ -6,6 +6,7 @@ import { createPitchSlice } from '~/_globalStore/_pitchSlice';
 import { createVelocitySlice } from '~/_globalStore/_velocitySlice';
 import { createHistorySlice } from '~/_globalStore/_historySlice';
 import { createThemeSlice } from '~/_globalStore/_themeSlice';
+import { createPlaybackSlice } from '~/_globalStore/_playbackSlice';
 
 import { type globalStoreType } from '~/_globalStore/_types';
 
@@ -16,6 +17,7 @@ const useGlobalStore = create<globalStoreType>()(
         ...createVelocitySlice(...a),
         ...createHistorySlice(...a),
         ...createThemeSlice(...a),
+        ...createPlaybackSlice(...a),
     }), {name : "seq-gen-data", version : 0})
 );
 

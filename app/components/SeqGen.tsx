@@ -8,6 +8,7 @@ import GenerateMidiDialog from "~/components/generateMidiDialog";
 import useGlobalStore from '~/globalStore';
 import { Pitch } from "~/types/pitch";
 import History from "~/components/history";
+import Player from "~/components/player";
 
 export type SeqGenProps = {
     className?: string
@@ -108,9 +109,12 @@ export default function SeqGen({ className }: SeqGenProps) {
 
             </section>
 
-            <section className="ActionSection row mt-4">
-                <div className="col">
+            <section className="ActionSection row mt-4 d-flex w-100">
+                <div className="col-2">
                     <GenerateMidiDialog />
+                </div>
+                <div className="col-4">
+                    <Player />
                 </div>
             </section>
 

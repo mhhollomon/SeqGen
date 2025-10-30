@@ -40,7 +40,12 @@ export interface ThemeSlice {
     setTheme: (theme: string) => void
 }
 
+export interface PlaybackSlice {
+    bpm: number,
+    setBpm: (bpm: number) => void
+}
+
 export type globalStoreType = PitchSlice &
         DurationSlice & VelocitySlice &
-        HistorySlice & ThemeSlice;
+        HistorySlice & ThemeSlice & PlaybackSlice;
 
