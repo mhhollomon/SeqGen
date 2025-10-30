@@ -10,7 +10,7 @@ It doesn't really need react router, but this gives it room to grow.
 
 - [React](https://react.dev/)
 - [React Router](https://reactrouter.com)
-- [Jotai](https://jotai.org/) - global state management for React
+- [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - global state management for React
 - [Radashi](https://radashi.js.org) - javascript/typescript utilities
 - [Radix-UI Primitives](https://www.radix-ui.com/primitives) -
   At least for now (I'm not sold on Radix yet)
