@@ -42,7 +42,7 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
     return (
         <Popover.Root modal={true} open={show} onOpenChange={setShow}>
             <Popover.Trigger asChild>
-                <button className="btn-bg p-2 border rounded middle-of-row" aria-label="Select pitch">
+                <button className="btn-bg p-2 border rounded middle-of-row first-row" aria-label="Select pitch">
                     {pitch.toString()}
                 </button>
             </Popover.Trigger>

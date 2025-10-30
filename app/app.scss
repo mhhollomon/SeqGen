@@ -72,6 +72,10 @@ $theme-colors: (
     --bs-btn-font-size: .75rem;
 }
 
+.first-row {
+    grid-row : 1;
+}
+
 .second-row {
     grid-row : 2;
 }
