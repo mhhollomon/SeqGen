@@ -1,5 +1,5 @@
 import { Dialog } from "radix-ui";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { generateMidi } from "~/midifile";
 import { durationList } from "~/types/durations";
 import  useGlobalStore from "~/globalStore";
@@ -7,18 +7,19 @@ import { Pitch } from "~/types/pitch";
 
 export default function GenerateMidiDialog() {
 
-    const pitches = useGlobalStore((state) => state.pitches);
-    const durations = useGlobalStore((state) => state.durations);
-    const velocities = useGlobalStore((state) => state.velocities);
-
+    const { bpm, pitches, durations, velocities } = useGlobalStore();
 
     const nameRef = useRef<HTMLInputElement>(null);
 
-    const [bpm, setBpm] = useState(120);
+    const [localBpm, setLocalBpm] = useState(120);
+
+    useEffect(() => {
+        setLocalBpm(bpm);
+    }, [bpm]);
 
     function generateFile() {
         const durationValues = durations.map((d) => durationList[d].value);
-        const midi = generateMidi(pitches.map((p) => new Pitch(p.midiValue)), durationValues, velocities, bpm);
+        const midi = generateMidi(pitches.map((p) => new Pitch(p.midiValue)), durationValues, velocities, localBpm);
         const fileName = nameRef.current?.value ?? "my_midi.mid";
         const link = document.createElement("a");
         link.href = midi;
@@ -42,7 +43,7 @@ export default function GenerateMidiDialog() {
                         <label htmlFor="midiName" className="form-label pb-0 mb-0">File Name</label>
                         <input id="midiName" type="text" className="form-control" defaultValue="my_midi.mid" ref={nameRef} />
                         <label htmlFor="midiBPM" className="form-label pb-0 mb-0 mt-2">BPM</label>
-                        <input id="midiBPM" type="number" className="form-control" value={bpm} onChange={(e) => setBpm(Number(e.target.value))} />
+                        <input id="midiBPM" type="number" className="form-control" value={localBpm} onChange={(e) => setLocalBpm(Number(e.target.value))} />
                         </form>
                         </div>
                     </Dialog.Description>
