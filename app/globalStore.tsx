@@ -11,10 +11,12 @@ type Action = {
     updatePitch : (slot : number, value : number) => void,
 }
 
-const STORE = create<State & Action>()((set) => ({
-    pitches :  [new Pitch(64), new Pitch(62), new Pitch(60),
-    new Pitch(62), new Pitch(64),
-    new Pitch(64), new Pitch(64), new Pitch()],
+const useGlobalStore = create<State & Action>()((set) => ({
+    pitches :  [
+        new Pitch(64), new Pitch(62), new Pitch(60),
+        new Pitch(62), new Pitch(64),
+        new Pitch(64), new Pitch(64), new Pitch()
+    ],
 
     addPitch : () =>
         set((state) => {
@@ -42,4 +44,4 @@ const STORE = create<State & Action>()((set) => ({
     }),
 }));
 
-export default STORE;
+export default useGlobalStore;

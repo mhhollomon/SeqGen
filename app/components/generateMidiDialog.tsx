@@ -4,11 +4,12 @@ import { useRef, useState } from "react";
 import { durationSeqAtom, velocitySeqAtom } from "~/atoms";
 import { generateMidi } from "~/midifile";
 import { durationList } from "~/types/durations";
-import  STORE from "~/globalStore";
+import  useGlobalStore from "~/globalStore";
 
-export default function MidiDialog() {
+export default function GenerateMidiDialog() {
 
-    const pitches = STORE((state) => state.pitches);
+    const pitches = useGlobalStore((state) => state.pitches);
+
     const durations = useAtomValue(durationSeqAtom);
     const velocity = useAtomValue(velocitySeqAtom);
 

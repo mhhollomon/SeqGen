@@ -1,5 +1,4 @@
 import { useAtom } from "jotai";
-import { useState } from "react";
 import { durationSeqAtom, velocitySeqAtom } from "~/atoms";
 import { cn } from "~/utils";
 import { durationList } from "~/types/durations";
@@ -7,26 +6,22 @@ import DurationSelector from "~/components/durationSelector";
 import { InfoTip } from "~/components/infoTip";
 import VelocitySelector from "~/components/velocitySelector";
 import PitchSelector from "~/components/pitchSelector";
-import MidiDialog from "~/components/midiDialog";
-import STORE from '~/globalStore';
-import { useStore } from "zustand";
+import GenerateMidiDialog from "~/components/generateMidiDialog";
+import useGlobalStore from '~/globalStore';
 
 export type SeqGenProps = {
     className?: string
 }
 
 export default function SeqGen({ className }: SeqGenProps) {
-    const pitches = useStore(STORE, (state) => state.pitches);
-    const addPitch = useStore(STORE, (state) => state.addPitch);
-    const removePitch = useStore(STORE, (state) => state.removePitch);
-    const updatePitch = useStore(STORE, (state) => state.updatePitch);
+    const pitches = useGlobalStore((state) => state.pitches);
+    const addPitch = useGlobalStore((state) => state.addPitch);
+    const removePitch = useGlobalStore((state) => state.removePitch);
+    const updatePitch = useGlobalStore((state) => state.updatePitch);
 
 
     const [durations, setDurations] = useAtom(durationSeqAtom);
     const [velocity, setVelocity] = useAtom(velocitySeqAtom);
-
-    const [showGenerateModal, setShowGenerateModal] = useState(false);
-
 
     function handleAddDuration() {
         console.log("add duration");
@@ -65,11 +60,6 @@ export default function SeqGen({ className }: SeqGenProps) {
         newVelocity[slot] = value;
         setVelocity(newVelocity);
     }
-
-    function handleGenerate() {
-        setShowGenerateModal(true);
-    }
-
 
     const label_grid_style = { display: 'grid',
         gridTemplateColumns: '8rem 1.5rem',
@@ -143,7 +133,7 @@ export default function SeqGen({ className }: SeqGenProps) {
 
             <section className="ActionSection row mt-4">
                 <div className="col">
-                    <MidiDialog />
+                    <GenerateMidiDialog />
                 </div>
             </section>
 
