@@ -9,33 +9,33 @@ import useGlobalStore from '~/globalStore';
 import { Pitch } from "~/types/pitch";
 import History from "~/components/history";
 import Player from "~/components/player";
+import { indexAtom, playingAtom } from "~/atoms";
+import { useAtomValue } from "jotai";
 
 export type SeqGenProps = {
     className?: string
 }
 
 export default function SeqGen({ className }: SeqGenProps) {
-    const pitches = useGlobalStore((state) => state.pitches);
-    const addPitch = useGlobalStore((state) => state.addPitch);
-    const removePitch = useGlobalStore((state) => state.removePitch);
-    const updatePitch = useGlobalStore((state) => state.updatePitch);
 
-    const durations = useGlobalStore((state) => state.durations);
-    const addDuration = useGlobalStore((state) => state.addDuration);
-    const removeDuration = useGlobalStore((state) => state.removeDuration);
-    const updateDuration = useGlobalStore((state) => state.updateDuration);
+    const { pitches, addPitch, removePitch, updatePitch } = useGlobalStore();
+    const { durations, addDuration, removeDuration, updateDuration } = useGlobalStore();
+    const { velocities, addVelocity, removeVelocity, updateVelocity } = useGlobalStore();
 
-    const velocities = useGlobalStore((state) => state.velocities);
-    const addVelocity = useGlobalStore((state) => state.addVelocity);
-    const removeVelocity = useGlobalStore((state) => state.removeVelocity);
-    const updateVelocity = useGlobalStore((state) => state.updateVelocity);
+    const playIndex = useAtomValue(indexAtom);
+    const playing = useAtomValue(playingAtom);
+
+    function highlightSlot(slot: number, length: number) {
+        return playing && playIndex % length === slot;
+    }
 
 
-    const label_grid_style = { display: 'grid',
+    const label_grid_style = {
+        display: 'grid',
         gridTemplateColumns: '8rem 1.5rem',
         gridTemplateRows: 'repeat(auto-fill, 4rem)',
         gridGap: '0.5rem',
-        borderRight : '3px solid black',
+        borderRight: '3px solid black',
         marginBottom: '1rem',
     };
     const grid_style = {
@@ -45,6 +45,8 @@ export default function SeqGen({ className }: SeqGenProps) {
         gridTemplateColumns: 'repeat(auto-fill, 5rem)',
         gridTemplateRows: 'repeat(auto-fill, 4rem)',
     };
+
+    const item_div_classes = "d-flex flex-column justify-content-center align-items-center";
 
 
     return (
@@ -57,55 +59,70 @@ export default function SeqGen({ className }: SeqGenProps) {
 
 
             <section className="SequenceSection d-flex">
-            {/* -- labels -- */}
-            <div  style={{height: '16rem', width: '11rem'}}>
-                <div style={label_grid_style}>
-                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch<InfoTip>Each box is a selector. Click to change the pitch</InfoTip></div>
-                    <div className="d-flex flex-column justify-content-center px-0">
-                        <button className="btn btn-primary btn-tiny px-0" onClick={addPitch}><i className="bi bi-caret-up"></i></button>
-                        <button className="btn btn-primary btn-tiny px-0" onClick={removePitch}><i className="bi bi-caret-down"></i></button>
+                {/* -- labels -- */}
+                <div style={{ height: '16rem', width: '11rem' }}>
+                    <div style={label_grid_style}>
+                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch<InfoTip>Each box is a selector. Click to change the pitch</InfoTip></div>
+                        <div className="d-flex flex-column justify-content-center px-0">
+                            <button className="btn btn-primary btn-tiny px-0" onClick={addPitch}><i className="bi bi-caret-up"></i></button>
+                            <button className="btn btn-primary btn-tiny px-0" onClick={removePitch}><i className="bi bi-caret-down"></i></button>
+                        </div>
+                    </div>
+                    <div style={label_grid_style}>
+                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration<InfoTip>Each box is a selector. Click to change the duration.</InfoTip></div>
+                        <div className="d-flex flex-column justify-content-center px-0">
+                            <button className="btn btn-primary btn-tiny px-0" onClick={addDuration}><i className="bi bi-caret-up"></i></button>
+                            <button className="btn btn-primary btn-tiny px-0" onClick={removeDuration}><i className="bi bi-caret-down"></i></button>
+                        </div>
+                    </div>
+                    <div style={label_grid_style}>
+                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity<InfoTip>Each box turns into a slider. Click to change the velocity.</InfoTip></div>
+                        <div className="d-flex flex-column justify-content-center px-0">
+                            <button className="btn btn-primary btn-tiny px-0" onClick={addVelocity}><i className="bi bi-caret-up"></i></button>
+                            <button className="btn btn-primary btn-tiny px-0" onClick={removeVelocity}><i className="bi bi-caret-down"></i></button>
+                        </div>
                     </div>
                 </div>
-                <div style={label_grid_style}>
-                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration<InfoTip>Each box is a selector. Click to change the duration.</InfoTip></div>
-                    <div className="d-flex flex-column justify-content-center px-0">
-                        <button className="btn btn-primary btn-tiny px-0" onClick={addDuration}><i className="bi bi-caret-up"></i></button>
-                        <button className="btn btn-primary btn-tiny px-0" onClick={removeDuration}><i className="bi bi-caret-down"></i></button>
-                    </div>
-                </div>
-                <div style={label_grid_style}>
-                    <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity<InfoTip>Each box turns into a slider. Click to change the velocity.</InfoTip></div>
-                    <div className="d-flex flex-column justify-content-center px-0">
-                        <button className="btn btn-primary btn-tiny px-0" onClick={addVelocity}><i className="bi bi-caret-up"></i></button>
-                        <button className="btn btn-primary btn-tiny px-0" onClick={removeVelocity}><i className="bi bi-caret-down"></i></button>
-                    </div>
-                </div>
-            </div>
 
-            <div  className="col flex-grow overflow-hidden pe-5">
-                <div className="w-100 overflow-x-scroll mx-1 ps-1" style={grid_style}>
-                    {pitches.map((pitch, index) =>{
-                        const pitchObj = new Pitch(pitch);
-                        return (
-                        <PitchSelector key={`${index}-${pitchObj.midiValue}`} slot={index} pitch={pitchObj} onChange={updatePitch} />
-                    )})}
+                <div className="col flex-grow overflow-hidden pe-5">
+                    <div className="w-100 overflow-x-scroll mx-1 ps-1" style={grid_style}>
+                        {pitches.map((pitch, index) => {
+                            const pitchObj = new Pitch(pitch);
+                            const classes = cn(item_div_classes, "first-row", highlightSlot(index, pitches.length) ? 'highlighted' : '');
+                            return (
+                                <div key={`${index}-${pitchObj.midiValue}`} className={classes}>
+                                    <PitchSelector key={`${index}-${pitchObj.midiValue}`} slot={index} pitch={pitchObj}
+                                        onChange={updatePitch} />
+                                </div>
+                            )
+                        })}
 
 
-                    {durations.map((dur, index) => {
-                        const dur_obj = durationList[dur];
-                        return <DurationSelector key={`${index}-${dur}`} slot={index}
+                        {durations.map((dur, dur_index) => {
+                            const dur_obj = durationList[dur];
+                            const classes = cn(item_div_classes, "second-row", highlightSlot(dur_index, durations.length) ? 'highlighted' : '');
+                            return <div key={`${dur_index}-${dur}`} className={classes}>
+                                <DurationSelector key={`${dur_index}-${dur}`} slot={dur_index}
                                     list={durationList} value={dur_obj} onChange={updateDuration} />
-                    })}
+                            </div>;
+                        })}
 
 
-                    {velocities.map((vel, index) => (
-                        <VelocitySelector key={`${index}-${vel}`} slot={index} value={vel} onChange={updateVelocity} />
-                    ))}
+                        {velocities.map((vel, vel_index) => {
+                            const classes = cn(item_div_classes, "third-row", highlightSlot(vel_index, velocities.length) ? 'highlighted' : '');
+                            return (
+                                <div key={`${vel_index}-${vel}`} className={classes}>
+                                    <VelocitySelector key={`${vel_index}-${vel}`} slot={vel_index} value={vel}
+                                        onChange={updateVelocity} />
+                                </div>
+
+                            )
+                        })}
+                    </div>
+
+
+
                 </div>
-
-
-
-            </div>
 
             </section>
 

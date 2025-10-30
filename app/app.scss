@@ -116,6 +116,13 @@ $theme-colors: (
     width: 5rem;
 }
 
+.highlighted {
+    background-color:  rgb(31, 60, 31);
+}
+
+ [data-bs-theme="dark"] .highlighted {
+    background-color: rgb(112, 128, 113);
+}
 
 .TooltipContent {
 	border-radius: 4px;

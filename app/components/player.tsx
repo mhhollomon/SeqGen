@@ -1,13 +1,15 @@
 import useGlobalStore from "~/globalStore";
+import { indexAtom, playingAtom } from "~/atoms";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { Pitch, PitchFrequencyMap } from "~/types/pitch";
 import { durationList } from "~/types/durations";
 import PlayerConfiguration from "~/components/playerConfiguration";
 import { AudioPlayer } from "~/types/audioPlayer";
+import { useAtom } from "jotai";
 
-
-function getInterval(BPM: number) { return 60000 / (BPM * 8); }
+// leght of a 16th note in milliseconds
+function getInterval(BPM: number) { return 60000 / (BPM * 4); }
 
 async function playTone(player : AudioPlayer | null, pitch: Pitch, velocity: number, duration: number) {
     if (player === null) {
@@ -15,7 +17,7 @@ async function playTone(player : AudioPlayer | null, pitch: Pitch, velocity: num
         return;
     }
     const frequency = PitchFrequencyMap[pitch.pitchClass][pitch.octave + 1];
-    player.playNote(frequency, duration);
+    player.playNote(frequency, duration, velocity / 127.0);
 
     if (player.audio.state === "suspended") {
         await player.audio.resume();
@@ -27,8 +29,8 @@ async function playTone(player : AudioPlayer | null, pitch: Pitch, velocity: num
 export default function Player() {
     const { pitches, durations, velocities, bpm } = useGlobalStore();
 
-    const [playing, setPlaying] = useState(false);
-    const [index, setIndex] = useState(0);
+    const [playing, setPlaying] = useAtom(playingAtom);
+    const [index, setIndex] = useAtom(indexAtom);
 
     const playerRef = useRef<AudioPlayer | null>(null);
 
@@ -57,7 +59,7 @@ export default function Player() {
 
         let newIndex = index + 1;
         if (index !== 0 && durationIndex === 0 && velocityIndex === 0 && pitchIndex === 0) {
-            newIndex = 0;
+            newIndex = 1;
         }
         const timeout_value = durationList[durations[durationIndex]].value * getInterval(bpm);
         const pitchToPlay = new Pitch(pitches[pitchIndex]);

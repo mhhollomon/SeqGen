@@ -13,7 +13,7 @@ export default function DurationSelector({ slot, list, value, onChange }: Durati
         <Select.Root value={String(value.id)} onValueChange={(x) => {
             onChange(slot, Number(x));
         }}>
-            <Select.Trigger className="SelectTrigger btn-bg p-2 border rounded middle-of-row second-row" aria-label="Duration selector">
+            <Select.Trigger className="SelectTrigger bg-body p-2 border rounded middle-of-row second-row" aria-label="Duration selector">
                 <Select.Value />
             </Select.Trigger>
             <Select.Portal>
