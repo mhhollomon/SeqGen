@@ -14,9 +14,14 @@ export class Pitch implements PitchValue {
     pitchClass: string = "R";
     octave: number = 0;
 
-    constructor(midiValue?: number, pitchClass?: string, octave?: number) {
+    constructor(midiValue?: number | PitchValue, pitchClass?: string, octave?: number) {
         if (midiValue === undefined) {
             this.setToRest();
+            return;
+        } else if (typeof midiValue === "object") {
+            this.midiValue = midiValue.midiValue;
+            this.pitchClass = midiValue.pitchClass;
+            this.octave = midiValue.octave;
             return;
         } else if (pitchClass === undefined) {
             this.midiValue = midiValue;

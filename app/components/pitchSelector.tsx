@@ -37,6 +37,7 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
     }
 
     const grid_classes = "btn-bg p-2 border rounded pitch-grid-button";
+    console.log(`localValue: ${JSON.stringify(localValue)}`);
     const pitch_class = localValue.isRest() ? "R" : localValue.pitchClass;
 
     return (

@@ -8,6 +8,7 @@ import VelocitySelector from "~/components/velocitySelector";
 import PitchSelector from "~/components/pitchSelector";
 import GenerateMidiDialog from "~/components/generateMidiDialog";
 import useGlobalStore from '~/globalStore';
+import { Pitch } from "~/types/pitch";
 
 export type SeqGenProps = {
     className?: string
@@ -18,6 +19,8 @@ export default function SeqGen({ className }: SeqGenProps) {
     const addPitch = useGlobalStore((state) => state.addPitch);
     const removePitch = useGlobalStore((state) => state.removePitch);
     const updatePitch = useGlobalStore((state) => state.updatePitch);
+
+    console.log(`pitches: ${JSON.stringify(pitches)}`);
 
 
     const [durations, setDurations] = useAtom(durationSeqAtom);
@@ -108,9 +111,11 @@ export default function SeqGen({ className }: SeqGenProps) {
 
             <div  className="col flex-grow overflow-hidden pe-5">
                 <div className="w-100 overflow-x-scroll mx-1 ps-1" style={grid_style}>
-                    {pitches.map((pitch, index) => (
-                        <PitchSelector key={`${index}-${pitch}`} slot={index} pitch={pitch} onChange={updatePitch} />
-                    ))}
+                    {pitches.map((pitch, index) =>{
+                        const pitchObj = new Pitch(pitch);
+                        return (
+                        <PitchSelector key={`${index}-${pitchObj.midiValue}`} slot={index} pitch={pitchObj} onChange={updatePitch} />
+                    )})}
 
 
                     {durations.map((dur, index) => {
