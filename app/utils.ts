@@ -1,15 +1,24 @@
 import { concat } from 'radashi';
+import { nanoid } from 'nanoid';
 
+/**
+ * Concatenates multiple values into a single string, separated by spaces.
+ * @param {any} v1 - The first value to concatenate
+ * @param {any} v2 - The second value to concatenate
+ * @param {any[]} args - Any additional values to concatenate
+ * @returns {string} - The concatenated string
+ */
 export function cn(v1: any, v2: any, ...args: any[]) : string {
     return concat(v1, v2, ...args).join(" ");
 }
 
-export function midiNoteToString(note: number): string {
-    if (note === 200) return "R";
-
-    const octave = Math.floor(note / 12) - 1;
-    const noteName = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"][note % 12];
-    return `${noteName}${octave}`;
+const ID_LENGTH = 8;
+/**
+ * Generates a unique identifier string of length 8, using the nanoid library.
+ * @returns {string} - The generated identifier string
+ */
+export function gen_id() {
+    return nanoid(ID_LENGTH);
 }
 
 interface chromatic {
@@ -37,46 +46,3 @@ interface chromatic {
         { note: "B", offset: 11 },
     ];
 
-export function midiStringToNote(note: string): number {
-    note = note.toUpperCase();
-    if (note === "R") return 200;
-    let index = -1;
-    if (note[-2] === "-") {
-        index = -2;
-    }
-    const octave = parseInt(note.slice(index));
-    const noteName = note.slice(0, index);
-    const noteIndex = chromaticScale.findIndex((n) => n.note === noteName);
-    if (noteIndex === -1) {
-        console.log(`noteName: ${noteName}, octave: ${octave}, noteIndex: ${noteIndex}`);
-        return -1;
-    }
-
-    const noteOffset = chromaticScale[noteIndex].offset;
-
-    console.log(`noteName: ${noteName}, octave: ${octave}, noteOffset: ${noteOffset}, noteIndex: ${noteIndex}`);
-    return (octave + 1) * 12 + noteOffset;
-}
-
-
-export function gcd(a: number, b: number): number {
-  // Ensure positive values for GCD calculation
-  a = Math.trunc(Math.abs(a));
-  b = Math.trunc(Math.abs(b));
-
-  while (b !== 0) {
-    let temp = b;
-    b = a % b;
-    a = temp;
-  }
-  return a;
-}
-
-// Function to calculate the Least Common Multiple (LCM) of two numbers
-export function lcm(a: number, b: number): number {
-  // Handle edge cases where one or both numbers are zero
-  if (a === 0 || b === 0) {
-    return 0;
-  }
-  return Math.trunc(Math.abs(a * b) / gcd(a, b));
-}

@@ -1,14 +1,15 @@
 import useGlobalStore from "~/globalStore";
 
 export default function History() {
-    const { history, undoHistory, reset } = useGlobalStore((state) => state);
+    const { history, undoHistory } = useGlobalStore();
 
     return (
         <div>
-            <button className="btn btn-primary" disabled={history.length === 0}
-                onClick={undoHistory}><i className="bi bi-arrow-counterclockwise me-1"></i>Undo</button>
-            <button className="btn btn-warning ms-2 float-end" disabled={history.length === 0}
-                onClick={reset}><i className="bi bi-x me-1"></i>Reset</button>
+            <button className="btn btn-primary rounded-end-0" disabled={history.length === 0}
+                onClick={undoHistory}><i className="bi bi-arrow-counterclockwise"></i>Undo</button>
+            <button className="btn btn-primary rounded-start-0" disabled={history.length === 0}
+                onClick={() => {}}><i className="bi bi-chevron-down"></i></button>
+
         </div>
     );
 }

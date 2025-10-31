@@ -11,6 +11,8 @@ import History from "~/components/history";
 import Player from "~/components/player";
 import { indexAtom, playingAtom } from "~/atoms";
 import { useAtomValue } from "jotai";
+import ResetButton from "~/components/ResetButton";
+import ExportImport from "~/components/exportImport";
 
 export type SeqGenProps = {
     className?: string
@@ -52,8 +54,14 @@ export default function SeqGen({ className }: SeqGenProps) {
     return (
         <main className={cn("container d-flex flex-column", className)}>
             <section className="SettingsSection row mt-4">
-                <div className="col">
+                <div className="col-3">
                     <History />
+                </div>
+                <div className="col-6 justify-content-center d-flex">
+                    <ExportImport />
+                </div>
+                <div className="col-3">
+                    <ResetButton />
                 </div>
             </section>
 

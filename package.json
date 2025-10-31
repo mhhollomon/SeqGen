@@ -16,6 +16,7 @@
     "isbot": "^5.1.31",
     "jotai": "^2.15.0",
     "midi-writer-js": "^3.1.1",
+    "nanoid": "^5.1.6",
     "radashi": "^12.7.0",
     "radix-ui": "^1.4.3",
     "react": "^19.1.1",

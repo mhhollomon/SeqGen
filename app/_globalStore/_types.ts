@@ -26,6 +26,8 @@ export interface HistoryEntry {
     pitches?: PitchSlice['pitches'],
     durations?: DurationSlice['durations'],
     velocities?: VelocitySlice['velocities'],
+    bpm?: number,
+    id? : string,
 }
 
 export interface HistorySlice {
@@ -33,6 +35,7 @@ export interface HistorySlice {
     addHistory: (entry : HistoryEntry) => void,
     undoHistory: () => void
     reset: () => void
+    getjson: () => string
 }
 
 export interface ThemeSlice {
