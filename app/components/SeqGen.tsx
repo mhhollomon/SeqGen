@@ -66,7 +66,7 @@ export default function SeqGen({ className }: SeqGenProps) {
             </section>
 
 
-            <section className="SequenceSection d-flex">
+            <section className="SequenceSection d-flex mt-4">
                 {/* -- labels -- */}
                 <div style={{ height: '16rem', width: '11rem' }}>
                     <div style={label_grid_style}>

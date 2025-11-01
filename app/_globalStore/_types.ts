@@ -32,10 +32,11 @@ export interface HistoryEntry {
 
 export interface HistorySlice {
     history: HistoryEntry[],
-    addHistory: (entry : HistoryEntry) => void,
-    undoHistory: () => void
-    reset: () => void
-    getjson: () => string
+    addHistory: (entry : HistoryEntry) => void;
+    undoHistory: () => void;
+    undoHistoryById: (id : string|undefined) => void;
+    reset: () => void;
+    getjson: () => string;
 }
 
 export interface ThemeSlice {
