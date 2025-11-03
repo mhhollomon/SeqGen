@@ -15,6 +15,17 @@ export const createVelocitySlice: StateCreator<globalStoreType,
         get().addHistory({ description: "Removed Velocity", velocities: get().velocities });
         set((state) => ({ velocities: state.velocities.slice(0, state.velocities.length - 1) }));
     },
+    deleteVelocitySlot: (slot : number) => {
+        if (slot < 0 || slot >= get().velocities.length) {
+            throw new Error(`Velocity Slot ${slot} is out of range`);
+        }
+        get().addHistory({ description: `Deleted Velocity for slot ${slot}`, velocities: get().velocities });
+        set((state) => {
+            const newVelocities = state.velocities.slice();
+            newVelocities.splice(slot, 1);
+            return { velocities: newVelocities };
+        });
+    },
     updateVelocity: (slot, value) => {
         get().addHistory({ description: `Updated Velocity for slot ${slot}`, velocities: get().velocities });
         if (slot < 0 || slot >= get().velocities.length) {

@@ -18,6 +18,7 @@ export interface VelocitySlice {
     velocities: number[],
     addVelocity: () => void,
     removeVelocity: () => void,
+    deleteVelocitySlot: (slot: number) => void,
     updateVelocity: (slot: number, value: number) => void
 }
 

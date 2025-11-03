@@ -2,7 +2,7 @@ import { cn } from "~/utils";
 import { durationList } from "~/types/durations";
 import DurationSelector from "~/components/durationSelector";
 import { InfoTip } from "~/components/infoTip";
-import VelocitySelector from "~/components/velocitySelector";
+import VelocitySelector from "~/components/velocity/velocitySelector";
 import PitchSelector from "~/components/pitchSelector";
 import GenerateMidiDialog from "~/components/generateMidiDialog";
 import useGlobalStore from '~/globalStore';
@@ -93,7 +93,7 @@ export default function SeqGen({ className }: SeqGenProps) {
                 </div>
 
                 <div className="col flex-grow overflow-hidden pe-5">
-                    <div className="w-100 overflow-x-scroll mx-1 ps-1" style={grid_style}>
+                    <div className="w-100 overflow-x-scroll overflow-y-hidden mx-1 ps-1" style={grid_style}>
                         {pitches.map((pitch, index) => {
                             const pitchObj = new Pitch(pitch);
                             const classes = cn(item_div_classes, "first-row", highlightSlot(index, pitches.length) ? 'highlighted' : '');

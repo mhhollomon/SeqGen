@@ -1,53 +1,14 @@
 import { Popover, Slider } from "radix-ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-type mousePositionType = {
-    x: number;
-    y: number;
-    ts : number;
-};
-
-function useConditionalMouseMove(isEnabled = true, onMouseUp?: (pos : mousePositionType) => void) {
-    const [mousePosition, setMousePosition] = useState<mousePositionType>({ x: 0, y: 0, ts:0 });
-
-    function handleMouseMove (event : MouseEvent){
-        console.log(`mouseMove on ${event.target} ${event.clientX} ${event.clientY}`, );
-        setMousePosition({ x: event.clientX, y: event.clientY, ts : event.timeStamp});
-    };
-
-    function handleMouseUp(e: MouseEvent) {
-        console.log(`mouseUp on ${e.target}`);
-        onMouseUp && onMouseUp({ x: e.clientX, y: e.clientY, ts : e.timeStamp});
-    }
-
-    useEffect(() => {
-        console.log(`useConditionalMouseMove useEffect: isEnabled = ${isEnabled}`);
-        // Only add the event listener if isEnabled is true
-        if (isEnabled) {
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
-        } else {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        }
-
-        // Cleanup function to remove the event listener
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [isEnabled]); // Rerun the effect when isEnabled changes
-
-    return mousePosition;
-}
-export type VelocitySelectorProps = {
+import { useConditionalMouseMove, type mousePositionType } from "~/hooks/useConditionalMouseMove";
+export type VelocitySliderProps = {
     slot: number;
     value: number;
     onChange: (slot: number, value: number) => void;
 }
 
-export default function VelocitySelector({ slot, value, onChange }: VelocitySelectorProps) {
-
+export default function VelocitySlider({ slot, value, onChange }: VelocitySliderProps) {
     const [localValue, setLocalValue] = useState(value);
     const [startPosition, setStartPosition] = useState<mousePositionType>({ x: 1, y: 1, ts : 0 });
     const [isDragging, setIsDragging] = useState(false);
@@ -82,10 +43,10 @@ export default function VelocitySelector({ slot, value, onChange }: VelocitySele
         setIsDragging(true);
     }
 
-    return (
+ return (
         <Popover.Root >
             <Popover.Trigger asChild>
-                <button className="bg-body p-2 border rounded middle-of-row third-row w-5rem" aria-label="Set Velocity"
+                <button className="bg-body border rounded  w-5rem" aria-label="Set Velocity"
                     onMouseDown={(e) => StartDrag(e)}
                     >
                     {isDragging ? dragValue : value}
