@@ -1,5 +1,6 @@
 import { Popover } from "radix-ui";
 import { useEffect, useState } from "react";
+import useGlobalStore from "~/globalStore";
 import type { Pitch } from "~/types/pitch";
 import { cn } from "~/utils";
 
@@ -12,6 +13,8 @@ export type PitchSelectorProps = {
 export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorProps) {
     const [localValue, setLocalValue] = useState(pitch);
     const [show, setShow] = useState(false);
+
+    const { deletePitchSlot } = useGlobalStore();
 
     useEffect(() => {
         setLocalValue(pitch);
@@ -40,9 +43,13 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
     const pitch_class = localValue.isRest() ? "R" : localValue.pitchClass;
 
     return (
+        <div className="d-flex flex-column align-items-center second-row" style={{ height: '4rem' }}>
+            <div className="text-center d-flex flex-row justify-content-between w-5rem align-items-start p-0 m-0" style={{ height: '1.0rem' }}>
+            </div>
+
         <Popover.Root modal={true} open={show} onOpenChange={setShow}>
             <Popover.Trigger asChild>
-                <button className="bg-body p-2 border rounded middle-of-row first-row" aria-label="Select pitch">
+                <button className="bg-body border rounded first-row w-5rem" aria-label="Select pitch" style={{ height: '2.0rem' }}>
                     {pitch.toString()}
                 </button>
             </Popover.Trigger>
@@ -93,6 +100,10 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
                 </Popover.Content>
             </Popover.Portal>
         </Popover.Root>
+            <a role="button" aria-label="Remove current Duration slot" className="p-0 m-0 w-5em"
+                onClick={() => deletePitchSlot(slot)} style={{ height: '1.0rem' }}><i className="bi bi-dash fade-in"></i></a>
+
+        </div>
     );
 }
 
