@@ -7,13 +7,27 @@ export const createVelocitySlice: StateCreator<globalStoreType,
     velocities: [
         100, 100, 100, 100, 100, 100, 100, 100
     ],
-    addVelocity: () => {
-        get().addHistory({ description: "Added Velocity", velocities: get().velocities });
-        set((state) => ({ velocities: [...state.velocities, state.velocities[state.velocities.length - 1] ] }));
-    },
-    removeVelocity: () => {
-        get().addHistory({ description: "Removed Velocity", velocities: get().velocities });
-        set((state) => ({ velocities: state.velocities.slice(0, state.velocities.length - 1) }));
+    addVelocity: (slot : number, side : 'before' | 'after') => {
+        if (slot < 0 || slot >= get().velocities.length) {
+            throw new Error(`Velocity Slot ${slot} is out of range`);
+        }
+        const newItem =  get().velocities[slot];
+        let newValues : number[];
+        if (side === 'before') {
+            if (slot === 0) {
+                newValues = [newItem, ...get().velocities];
+            } else {
+                newValues = [ ...get().velocities.slice(0, slot), newItem, ...get().velocities.slice(slot)]
+            }
+        } else {
+            if (slot === get().velocities.length - 1) {
+                newValues = [ ...get().velocities, newItem];
+            } else {
+                newValues = [ ...get().velocities.slice(0, slot + 1), newItem, ...get().velocities.slice(slot + 1)]
+            }
+        }
+        get().addHistory({ description: `Added Velocity ${side} slot ${slot}`, velocities: get().velocities });
+        set((state) => ({ velocities: newValues }));
     },
     deleteVelocitySlot: (slot : number) => {
         if (slot < 0 || slot >= get().velocities.length) {

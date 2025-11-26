@@ -1,6 +1,6 @@
 import { type globalStoreType, type PitchSlice } from "./_types";
 import { type StateCreator } from "zustand";
-import { Pitch } from "~/types/pitch";
+import { Pitch, type PitchValue } from "~/types/pitch";
 
 export const createPitchSlice: StateCreator<globalStoreType,
         [['zustand/persist', unknown]], [], PitchSlice> = (set, get) => ({
@@ -10,16 +10,41 @@ export const createPitchSlice: StateCreator<globalStoreType,
         new Pitch(62), new Pitch(64),
         new Pitch(64), new Pitch(64), new Pitch()
     ],
-    addPitch: () => {
-        get().addHistory({ description: "Added Pitch", pitches: get().pitches });
-        const lastPitch = get().pitches[get().pitches.length - 1];
-        const newPitch = new Pitch(lastPitch.midiValue);
-        set((state) => ({ pitches: [...state.pitches, newPitch ] }));
+    addPitch: (slot : number, side : 'before' | 'after') => {
+        if (slot < 0 || slot >= get().pitches.length) {
+            throw new Error(`Velocity Slot ${slot} is out of range`);
+        }
+        const newItem =  get().pitches[slot];
+        let newValues : PitchValue[];
+        if (side === 'before') {
+            if (slot === 0) {
+                newValues = [newItem, ...get().pitches];
+            } else {
+                newValues = [ ...get().pitches.slice(0, slot), newItem, ...get().pitches.slice(slot)]
+            }
+        } else {
+            if (slot === get().pitches.length - 1) {
+                newValues = [ ...get().pitches, newItem];
+            } else {
+                newValues = [ ...get().pitches.slice(0, slot + 1), newItem, ...get().pitches.slice(slot + 1)]
+            }
+        }
+        get().addHistory({ description: `Added Pitch ${side} slot ${slot}`, pitches: get().pitches });
+        set((state) => ({ pitches: newValues }));
     },
-    removePitch: () => {
-        get().addHistory({ description: "Removed Pitch", pitches: get().pitches });
-        set((state) => ({ pitches: state.pitches.slice(0, state.pitches.length - 1) }));
+
+    deletePitchSlot: (slot : number) => {
+        if (slot < 0 || slot >= get().pitches.length) {
+            throw new Error(`Pitch Slot ${slot} is out of range`);
+        }
+        get().addHistory({ description: `Deleted Pitch for slot ${slot}`, pitches: get().pitches });
+        set((state) => {
+            const newPitches = state.pitches.slice();
+            newPitches.splice(slot, 1);
+            return { pitches: newPitches };
+        });
     },
+
     updatePitch: (slot, value) => {
         if (slot < 0 || slot >= get().pitches.length) {
             throw new Error(`Pitch Slot ${slot} is out of range`);

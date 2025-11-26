@@ -46,7 +46,7 @@ export default function VelocitySlider({ slot, value, onChange }: VelocitySlider
  return (
         <Popover.Root >
             <Popover.Trigger asChild>
-                <button className="bg-body border rounded  w-5rem" aria-label="Set Velocity"
+                <button className="bg-body border rounded w-5rem" aria-label="Set Velocity"
                     onMouseDown={(e) => StartDrag(e)}
                     >
                     {isDragging ? dragValue : value}
