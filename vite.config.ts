@@ -1,14 +1,15 @@
-import { reactRouter } from "@react-router/dev/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
+
+const URL_PREFIX = '/SeqGen/';
 
 export default defineConfig(({command, mode}) => {
     const isProduction = (command === 'build' && mode === 'production');
 
     return {
-        base: (isProduction ? '/SeqGen/' : ''),
-        baseUrl: (isProduction ? '/SeqGen/' : ''),
-        plugins: [reactRouter(), tsconfigPaths()],
+        base: (isProduction ? URL_PREFIX : ''),
+        baseUrl: (isProduction ? URL_PREFIX : ''),
+        plugins: [tsconfigPaths()],
         css: {
             transformer: 'lightningcss',
             preprocessorOptions: {
