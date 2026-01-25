@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useGlobalStore from "~/globalStore";
 import type { Pitch } from "~/types/pitch";
 import { cn } from "~/utils";
+import * as icons from "~/icons";
 
 export type PitchSelectorProps = {
     slot: number;
@@ -101,7 +102,7 @@ export default function PitchSelector({ slot, pitch, onChange }: PitchSelectorPr
             </Popover.Portal>
         </Popover.Root>
             <a role="button" aria-label="Remove current Duration slot" className="p-0 m-0 w-5em"
-                onClick={() => deletePitchSlot(slot)} style={{ height: '1.0rem' }}><i className="bi bi-dash fade-in"></i></a>
+                onClick={() => deletePitchSlot(slot)} style={{ height: '1.0rem' }}><span className="fade-in">{icons.dash}</span></a>
 
         </div>
     );

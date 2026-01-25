@@ -83,7 +83,7 @@ export default function SeqGen({ className }: SeqGenProps) {
                 <div className="col flex-grow overflow-hidden pe-5">
                     <div className="w-100 overflow-x-scroll overflow-y-hidden mx-1 ps-1" style={grid_style}>
                         <div className="first-row align-content-center fade-in"
-                            onClick={x => addPitch(0, 'before')}>+</div>
+                            onClick={() => addPitch(0, 'before')}>+</div>
                         {pitches.map((pitch, index) => {
                             const pitchObj = new Pitch(pitch);
                             const classes = cn(item_div_classes, "first-row", highlightSlot(index, pitches.length) ? 'highlighted' : '');
@@ -93,13 +93,13 @@ export default function SeqGen({ className }: SeqGenProps) {
                                         onChange={updatePitch} />
                                 </div>
                                 <div className="first-row align-content-center fade-in"
-                                    onClick={x => addPitch(index, 'after')}>+</div>
+                                    onClick={() => addPitch(index, 'after')}>+</div>
                             </>
                         })}
 
 
                         <div className="second-row align-content-center fade-in"
-                            onClick={x => addDuration(0, 'before')}>+</div>
+                            onClick={() => addDuration(0, 'before')}>+</div>
                         {durations.map((dur, dur_index) => {
                             const dur_obj = durationList[dur];
                             const classes = cn(item_div_classes, "second-row", highlightSlot(dur_index, durations.length) ? 'highlighted' : '');
@@ -109,13 +109,13 @@ export default function SeqGen({ className }: SeqGenProps) {
                                     list={durationList} value={dur_obj} onChange={updateDuration} />
                             </div>
                             <div className="second-row align-content-center fade-in"
-                                onClick={x => addDuration(dur_index, 'after')}>+</div>
+                                onClick={() => addDuration(dur_index, 'after')}>+</div>
                             </>
 
                         })}
 
                         <div role="button" className="third-row align-content-center fade-in"
-                            onClick={x => addVelocity(0, 'before')}>+</div>
+                            onClick={() => addVelocity(0, 'before')}>+</div>
                         {velocities.map((vel, vel_index) => {
                             const classes = cn(item_div_classes, "third-row", highlightSlot(vel_index, velocities.length) ? 'highlighted' : '');
                             return <>
@@ -124,7 +124,7 @@ export default function SeqGen({ className }: SeqGenProps) {
                                         onChange={updateVelocity} />
                                 </div>
                                 <div role="button" className="third-row align-content-center justify-items-center fade-in"
-                                    onClick={x => addVelocity(vel_index, 'after')}>+</div>
+                                    onClick={() => addVelocity(vel_index, 'after')}>+</div>
 
 
                             </>

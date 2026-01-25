@@ -1,5 +1,6 @@
 import VelocitySlider from "~/components/velocity/velocitySlider";
 import useGlobalStore from "~/globalStore";
+import * as icons from "~/icons";
 
 export type VelocitySelectorProps = {
     slot: number;
@@ -17,7 +18,7 @@ export default function VelocitySelector({ slot, value, onChange }: VelocitySele
             </div>
             <VelocitySlider slot={slot} value={value} onChange={onChange} />
             <a role="button" aria-label="Remove current velocity slot" className="p-0 m-0 w-5em"
-                onClick={() => deleteVelocitySlot(slot)} style={{ height: '1.0rem'}}><i className="bi bi-dash fade-in"></i></a>
+                onClick={() => deleteVelocitySlot(slot)} style={{ height: '1.0rem'}}><span className="fade-in">{icons.dash}</span></a>
         </div>
     )
 }

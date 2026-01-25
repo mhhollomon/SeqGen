@@ -30,7 +30,7 @@ export const createPitchSlice: StateCreator<globalStoreType,
             }
         }
         get().addHistory({ description: `Added Pitch ${side} slot ${slot}`, pitches: get().pitches });
-        set((state) => ({ pitches: newValues }));
+        set(() => ({ pitches: newValues }));
     },
 
     deletePitchSlot: (slot : number) => {

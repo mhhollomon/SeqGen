@@ -27,7 +27,7 @@ export const createVelocitySlice: StateCreator<globalStoreType,
             }
         }
         get().addHistory({ description: `Added Velocity ${side} slot ${slot}`, velocities: get().velocities });
-        set((state) => ({ velocities: newValues }));
+        set(() => ({ velocities: newValues }));
     },
     deleteVelocitySlot: (slot : number) => {
         if (slot < 0 || slot >= get().velocities.length) {

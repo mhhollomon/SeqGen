@@ -1,6 +1,11 @@
 import './App.css'
+
 import Header from '~/components/header'
 import logo from "./assets/notes-logo.svg"
+import SeqGen from "~/components/SeqGen"
+
+import { Tooltip } from "radix-ui";
+
 
 const APP_NAME = 'SeqGen'
 
@@ -13,10 +18,9 @@ export default function App() {
         <link rel="icon" type="image/svg+xml" href={logo} />
 
         <Header title={APP_NAME} avatar={logo} />
-        <main className="main">
-            <div>Cool Stuff Here</div>
-        </main>
-
+        <Tooltip.Provider>
+        <SeqGen className="mt-5" />
+        </Tooltip.Provider>
     </>
   )
 }

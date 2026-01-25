@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import useGlobalStore from "~/globalStore";
+import * as icons from "~/icons"
 
 export default function ExportImport() {
     const { getjson } = useGlobalStore();
@@ -33,9 +33,10 @@ export default function ExportImport() {
 
     return (
         <div>
-            <button className="btn btn-primary me-2" onClick={handleExportClick}><i className="bi bi-download me-1"></i>Export</button>
-            <label className="btn btn-primary" role="button" htmlFor="importSettings"><i className="bi bi-upload me-1"></i>Import</label>
-            <input className="d-none btn btn-primary" type="file" id="importSettings" accept=".seqgen" onChange={handleFileChoice} />
+            <button className="btn btn-primary me-2" onClick={handleExportClick}>{icons.download}<span className="ms-1">Export</span></button>
+
+            <label className="btn btn-primary" role="button" htmlFor="importSettings">{icons.upload}<span className="ms-1">Import</span></label>
+            <input className="d-none" type="file" id="importSettings" accept=".seqgen" onChange={handleFileChoice} />
         </div>
     );
 }

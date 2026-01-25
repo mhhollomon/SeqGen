@@ -2,6 +2,7 @@ import { Dialog } from "radix-ui";
 
 import { useEffect, useState } from "react";
 import useGlobalStore from "~/globalStore";
+import * as icons from "~/icons"
 
 export default function PlayerConfiguration() {
     const { bpm: globalBpm, setBpm: setGlobalBpm } = useGlobalStore();
@@ -21,7 +22,7 @@ export default function PlayerConfiguration() {
     return (<>
         <Dialog.Root open={show}>
             <Dialog.Trigger asChild >
-                <button className="btn btn-info ms-2" onClick={()=>setShow(true)}><i className="bi bi-gear"></i></button>
+                <button className="btn btn-info ms-2" onClick={()=>setShow(true)}>{icons.gear}</button>
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="dialog-overlay" />
@@ -46,9 +47,4 @@ export default function PlayerConfiguration() {
         </Dialog.Root>
 
     </>);
-    return (
-        <button className="btn btn-info ms-2">
-            <i className="bi bi-gear"></i>
-        </button>
-    );
 }

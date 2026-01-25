@@ -1,5 +1,5 @@
 import useGlobalStore from "~/globalStore";
-
+import * as icons from "~/icons"
 import { DropdownMenu } from "radix-ui";
 
 export default function History() {
@@ -8,18 +8,18 @@ export default function History() {
     return (
         <div>
             <button className="btn btn-primary rounded-end-0 pe-1" disabled={history.length === 0}
-                onClick={undoHistory}><i className="bi bi-arrow-counterclockwise"></i>Undo</button>
+                onClick={undoHistory}>{icons.arrowCounterClockwise}Undo</button>
 
 
         <DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild>
             <button className="btn btn-primary rounded-start-0 pe-1" disabled={history.length === 0}
-                onClick={() => {}}><i className="bi bi-chevron-down"></i></button>
+                onClick={() => {}}>{icons.chevronDown}</button>
 			</DropdownMenu.Trigger>
 
 			<DropdownMenu.Portal>
 				<DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-                    {history.toReversed().map((h, i) => {
+                    {history.toReversed().map((h) => {
                         return (
                             <DropdownMenu.Item className="DropdownMenuItem" key={h.id} onSelect={() => undoHistoryById(h.id)}>
                                 {h.description}

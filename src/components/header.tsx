@@ -39,7 +39,7 @@ export default function Header({ title, avatar }: HeaderProps) {
             <div className="theme-switcher">
                 <button className="theme-switcher__btn" type="button" popoverTarget="theme-switcher__menu"
                     popoverTargetAction="toggle" aria-label="Toggle theme">
-                    {themeIcon}
+                    <span style={{verticalAlign: 'top'}}>{themeIcon}</span>
                     <span>Theme</span>
                 </button>
                 <ul className="theme-switcher__menu" popover="auto" id="theme-switcher__menu" aria-label="Change visual theme">

@@ -27,7 +27,7 @@ export const createDurationSlice: StateCreator<globalStoreType,
             }
         }
         get().addHistory({ description: `Added Duration ${side} slot ${slot}`, durations: get().durations });
-        set((state) => ({ durations: newDurations }));
+        set(() => ({ durations: newDurations }));
     },
 
     updateDuration: (slot, value) => {

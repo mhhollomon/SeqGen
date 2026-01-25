@@ -1,5 +1,6 @@
 import { Popover, Slider } from "radix-ui";
 import { useState } from "react";
+import * as icons from "~/icons"
 
 import { useConditionalMouseMove, type mousePositionType } from "~/hooks/useConditionalMouseMove";
 export type VelocitySliderProps = {
@@ -73,7 +74,7 @@ export default function VelocitySlider({ slot, value, onChange }: VelocitySlider
 
                     </div>
                     <Popover.Close className="PopoverClose" aria-label="Close">
-                        <i className="bi bi-x"></i>
+                        {icons.x}
                     </Popover.Close>
                     <Popover.Arrow className="PopoverArrow" />
                 </Popover.Content>

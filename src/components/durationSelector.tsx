@@ -1,6 +1,7 @@
 import { Select } from "radix-ui";
 import useGlobalStore from "~/globalStore";
 import { type Duration } from "~/types/durations";
+import * as icons from "~/icons";
 
 export type DurationSelectorProps = {
     slot: number;
@@ -26,7 +27,7 @@ export default function DurationSelector({ slot, list, value, onChange }: Durati
                 <Select.Portal>
                     <Select.Content className="SelectContent">
                         <Select.ScrollUpButton className="SelectScrollButton">
-                            <i className="bi bi-chevron-up"></i>
+                            {icons.chevronUp}
                         </Select.ScrollUpButton>
                         <Select.Viewport className="SelectViewport">
                             <Select.Group>
@@ -37,7 +38,7 @@ export default function DurationSelector({ slot, list, value, onChange }: Durati
                                             data-state={d.id === value.id ? "checked" : "unchecked"}>
                                             <Select.ItemText>{d.name}</Select.ItemText>
                                             <Select.ItemIndicator className="SelectItemIndicator">
-                                                <i className="bi bi-check"></i>
+                                                {icons.check}
                                             </Select.ItemIndicator>
                                         </Select.Item>
                                     );
@@ -46,13 +47,13 @@ export default function DurationSelector({ slot, list, value, onChange }: Durati
 
                         </Select.Viewport>
                         <Select.ScrollDownButton className="SelectScrollButton">
-                            <i className="bi bi-chevron-down"></i>
+                            {icons.chevronDown}
                         </Select.ScrollDownButton>
                     </Select.Content>
                 </Select.Portal>
             </Select.Root>
             <a role="button" aria-label="Remove current Duration slot" className="p-0 m-0 w-5em"
-                onClick={() => deleteDurationSlot(slot)} style={{ height: '1.0rem' }}><i className="bi bi-dash fade-in"></i></a>
+                onClick={() => deleteDurationSlot(slot)} style={{ height: '1.0rem' }}><span className="fade-in">{icons.dash}</span></a>
 
         </div>
     );

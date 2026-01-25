@@ -21,28 +21,28 @@ export function gen_id() {
     return nanoid(ID_LENGTH);
 }
 
-interface chromatic {
-    note: string,
-    offset: number
-}
+// interface chromatic {
+//     note: string,
+//     offset: number
+// }
 
- const chromaticScale: chromatic[] = [
-        { note: "C", offset: 0 },
-        { note: "C#", offset: 1 },
-        { note: "Db", offset: 1 },
-        { note: "D", offset: 2 },
-        { note: "D#", offset: 3 },
-        { note: "Eb", offset: 3 },
-        { note: "E", offset: 4 },
-        { note: "F", offset: 5 },
-        { note: "F#", offset: 6 },
-        { note: "Gb", offset: 6 },
-        { note: "G", offset: 7 },
-        { note: "G#", offset: 8 },
-        { note: "Ab", offset: 8 },
-        { note: "A", offset: 9 },
-        { note: "A#", offset: 10 },
-        { note: "Bb", offset: 10 },
-        { note: "B", offset: 11 },
-    ];
+//  const chromaticScale: chromatic[] = [
+//         { note: "C", offset: 0 },
+//         { note: "C#", offset: 1 },
+//         { note: "Db", offset: 1 },
+//         { note: "D", offset: 2 },
+//         { note: "D#", offset: 3 },
+//         { note: "Eb", offset: 3 },
+//         { note: "E", offset: 4 },
+//         { note: "F", offset: 5 },
+//         { note: "F#", offset: 6 },
+//         { note: "Gb", offset: 6 },
+//         { note: "G", offset: 7 },
+//         { note: "G#", offset: 8 },
+//         { note: "Ab", offset: 8 },
+//         { note: "A", offset: 9 },
+//         { note: "A#", offset: 10 },
+//         { note: "Bb", offset: 10 },
+//         { note: "B", offset: 11 },
+//     ];
 

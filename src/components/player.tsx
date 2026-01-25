@@ -8,6 +8,8 @@ import PlayerConfiguration from "~/components/playerConfiguration";
 import { AudioPlayer } from "~/types/audioPlayer";
 import { useAtom } from "jotai";
 
+import * as icons from "~/icons";
+
 // leght of a 16th note in milliseconds
 function getInterval(BPM: number) { return 60000 / (BPM * 4); }
 
@@ -86,8 +88,8 @@ export default function Player() {
         <>
             <div className="d-inline col-1"></div>
             <div>
-                <button className="btn btn-primary ms-3" aria-description="Rewind" onClick={() => { setIndex(0); setPlaying(false) }}><i className="bi bi-chevron-bar-left"></i></button>
-                <button className="btn btn-primary ms-1" aria-description="Play/Pause" onClick={() => handleClick(!playing)}>{playing ? <i className="bi bi-pause"></i> : <i className="bi bi-chevron-right"></i>}</button>
+                <button className="btn btn-primary ms-3" aria-description="Rewind" onClick={() => { setIndex(0); setPlaying(false) }}>{icons.chevronBarLeft}</button>
+                <button className="btn btn-primary ms-1" aria-description="Play/Pause" onClick={() => handleClick(!playing)}>{playing ? icons.pause: icons.chevronRight}</button>
                 <PlayerConfiguration />
                 <div className={"ms-3"}>
                     <span className="mx-1">{index}</span>
