@@ -1,4 +1,5 @@
 import { cn } from "~/utils";
+import './seqgen.css';
 import { durationList } from "~/types/durations";
 import DurationSelector from "~/components/durationSelector";
 import { InfoTip } from "~/components/infoTip";
@@ -40,48 +41,37 @@ export default function SeqGen({ className }: SeqGenProps) {
         borderRight: '3px solid black',
         marginBottom: '1rem',
     };
-    const grid_style = {
-        display: 'grid',
-        gridGap: '1rem 0.5rem',
-        marginRight: '1rem',
-        gridTemplateColumns: '0.5rem repeat(auto-fill, 5rem 0.5rem)',
-        gridTemplateRows: '4rem 4rem 4rem 0.25rem',
-    };
 
     const item_div_classes = "d-flex flex-column justify-content-center align-items-center";
 
 
     return (
-        <main className={cn("container d-flex flex-column", className)}>
-            <section className="SettingsSection row mt-4">
-                <div className="col-3">
-                    <History />
-                </div>
-                <div className="col-6 justify-content-center d-flex">
-                    <ExportImport />
-                </div>
-                <div className="col-3">
+        <main className={cn("seqgen-ui", className)}>
+            <section className="seqgen-ui__settings">
+                <History />
+                <ExportImport />
+                <div className="seqgen-ui__reset">
                     <ResetButton />
                 </div>
             </section>
 
 
-            <section className="SequenceSection d-flex mt-4">
+            <section className="seqgen-ui__tracks">
                 {/* -- labels -- */}
                 <div style={{ height: '16rem', width: '9rem' }}>
-                    <div style={label_grid_style}>
-                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch<InfoTip>Each box is a selector. Click to change the pitch</InfoTip></div>
+                    <div className="seqgen-ui__track-label">
+                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch</div>
                     </div>
-                    <div style={label_grid_style}>
-                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration<InfoTip>Each box is a selector. Click to change the duration.</InfoTip></div>
+                    <div className="seqgen-ui__track-label">
+                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration</div>
                     </div>
-                    <div style={label_grid_style}>
-                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity<InfoTip>Each box turns into a slider. Click to change the velocity.</InfoTip></div>
+                    <div className="seqgen-ui__track-label">
+                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity</div>
                     </div>
                 </div>
 
-                <div className="col flex-grow overflow-hidden pe-5">
-                    <div className="w-100 overflow-x-scroll overflow-y-hidden mx-1 ps-1" style={grid_style}>
+                <div className="seqgen-ui__track">
+                    <div className="seqgen-ui__track-grid">
                         <div className="first-row align-content-center fade-in"
                             onClick={() => addPitch(0, 'before')}>+</div>
                         {pitches.map((pitch, index) => {

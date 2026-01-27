@@ -3,7 +3,7 @@ d-none {
 }
 
 .hero-header {
-    background-color: var(--color-primary);
+    background-color: var(--clr-primary);
     color: #fff;
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
@@ -35,9 +35,9 @@ d-none {
     /* margin : 0.5rem 1rem; */
     padding: 0 .5rem;
     height: 2rem;
-    background-color: var(--bg-color);
-    color: var(--fg-color);
-    border-color: var(--border-color);
+    background-color: var(--clr-bg);
+    color: var(--clr-fg);
+    border-color: var(--clr-border);
     border-width: 1px;
     border-style: solid;
 
@@ -51,7 +51,7 @@ d-none {
 
     &:hover,
     &:focus-visible {
-        --bg-hover-color: oklab(from var(--color-primary) calc(l + .4) a b);
+        --bg-hover-color: oklab(from var(--clr-primary) calc(l + .4) a b);
         background-color: var(--bg-hover-color);
         color: contrast(var(--bg-hover-color));
     }
@@ -65,8 +65,8 @@ d-none {
     top: anchor(bottom);
     right: anchor(right);
     padding: 0;
-    background-color: var(--bg-color);
-    color: var(--fg-color);
+    background-color: var(--clr-bg);
+    color: var(--clr-fg);
     border-radius: var(--border-radius);
     border-width: 1px;
     border-style: solid;
@@ -77,7 +77,7 @@ d-none {
         list-style: none;
         &:hover,
         &:focus-visible {
-            --bg-hover-color: oklab(from var(--color-primary) calc(l + .4) a b);
+            --bg-hover-color: oklab(from var(--clr-primary) calc(l + .4) a b);
             background-color: var(--bg-hover-color);
             color: contrast(var(--bg-hover-color));
         }
@@ -99,6 +99,6 @@ d-none {
 
 .theme-switcher__icon {
     vertical-align: middle;
-    color: var(--fg-color);
+    color: var(--clr-fg);
     margin-inline-end: .25rem;
 }

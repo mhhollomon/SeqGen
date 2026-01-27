@@ -2,7 +2,7 @@ import './App.css'
 
 import Header from '~/components/header'
 import logo from "./assets/notes-logo.svg"
-import SeqGen from "~/components/SeqGen"
+import SeqGen from "~/components/seqgen"
 
 import { Tooltip } from "radix-ui";
 

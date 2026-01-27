@@ -1,12 +1,12 @@
 :root {
     /* THEME VARS */
-    --border-color : black;
-    --color-primary: #2d471e;
-    --fg-color : black;
-    --bg-color : white;
+    --clr-border : black;
+    --clr-primary: #2d471e;
+    --clr-fg : black;
+    --clr-bg : white;
 
-    --brand-color :#2d471e;
-    --accent-color : var(--brand-color);
+    --clr-brand :#2d471e;
+    --clr-accent : var(--clr-brand);
 
     --border-radius : .5rem;
 
@@ -17,18 +17,18 @@
 }
 
 [data-theme="dark"] {
-    --border-color : #dee2e6;
-    --fg-color : white;
-    --bg-color : #212529;
-    --accent-color : #83e64a;
+    --clr-border : #dee2e6;
+    --clr-fg : white;
+    --clr-bg : #212529;
+    --clr-accent : #83e64a;
 }
 
 
 body {
-    background-color : var(--bg-color);
-    color : var(--fg-color);
+    background-color : var(--clr-bg);
+    color : var(--clr-fg);
 
-    --border-std : 1px solid var(--border-color);
+    --border-std : 1px solid var(--clr-border);
 }
 
 input, select, button, optgroup, textarea {
@@ -36,9 +36,13 @@ input, select, button, optgroup, textarea {
     border-radius: .5rem;
     border: var(--border-std);
     margin : 0 .25rem;
-    color : var(--fg-color);
-    background-color : var(--bg-color);
-    accent-color: var(--accent-color);
-    background-color: var(--bg-color);
-    color: var(--fg-color);
+    color : var(--clr-fg);
+    background-color : var(--clr-bg);
+    accent-color: var(--clr-accent);
+    background-color: var(--clr-bg);
+    color: var(--clr-fg);
+}
+
+.d-none {
+    display: none;
 }
