@@ -1,10 +1,6 @@
 .seqgen-ui {
-    display : flex;
-    flex-direction : column;
-    margin-block-start : 2rem;
-    margin-inline : 4rem;
-    justify-content: space-between;
-
+    margin-block-start : 10dvh;
+    margin-inline : 10vw;
 }
 
 .seqgen-ui__settings {
@@ -18,35 +14,45 @@
 }
 
 .seqgen-ui__tracks {
-    display : flex;
-    flex-direction : row;
+    --track-height : 5rem;
+    --row-gap : 1rem;
+    display : grid;
+    grid-template-columns: 9rem 1fr;
     margin-block-start : 2rem;
+}
+
+.seqgen_ui__track-label-grid {
+    display : grid;
+    grid-template-columns: 9rem;
+    grid-template-rows: repeat(3, var(--track-height));
+    row-gap: var(--row-gap);
 }
 
 .seqgen-ui__track {
     display : flex;
     flex-direction : row;
-    margin-block-start : 2rem;
+    width : 100%;
+    overflow-x : scroll;
+    overflow-y : hidden;
+
 }
 
 .seqgen-ui__track-label {
-        display: grid;
-        grid-template-columns: 8rem;
-        grid-template-rows: repeat(auto-fill, 4rem);
-        grid-gap: 0.5rem;
         border-right: 3px solid black;
-        margin-block-end: 1rem;
+        padding-block : 1rem;
         font-weight : 700;
         font-size : 1.5rem;
         align-self: center;
+        align-content: center;
 }
 
 .seqgen-ui__track-grid {
         display: grid;
-        grid-gap: 1rem 0.5rem;
+        width: 100%;
+        grid-gap: var(--row-gap) 0.5rem;
         margin-right: 1rem;
-        grid-template-columns: 0.5rem repeat(auto-fill, 5rem 0.5rem);
-        grid-template-rows: 4rem 4rem 4rem 0.25rem;
-        overflow-x : scroll;
-        overflow-y : hidden;
+        grid-template-columns: 0.5rem repeat(auto-fill, 6rem 0.5rem);
+        grid-template-rows: repeat(3, var(--track-height));
 }
+
+

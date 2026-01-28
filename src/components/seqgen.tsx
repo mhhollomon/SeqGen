@@ -32,18 +32,25 @@ export default function SeqGen({ className }: SeqGenProps) {
         return playing && playIndex % length === slot;
     }
 
-
-    const label_grid_style = {
-        display: 'grid',
-        gridTemplateColumns: '8rem',
-        gridTemplateRows: 'repeat(auto-fill, 4rem)',
-        gridGap: '0.5rem',
-        borderRight: '3px solid black',
-        marginBottom: '1rem',
-    };
-
-    const item_div_classes = "d-flex flex-column justify-content-center align-items-center";
-
+    /*
+     * LAYOUT
+     * 1. Settings - Grid (one row, 3 columns)
+     *    1.1 History
+     *    1.2 Export/Import
+     *    1.3 Reset
+     * 2. Tracks - Flexbox (one row, 2 columns)
+     *    2.1 Labels - Grid (3 rows, 1 column)
+     *    2.2 Tracks - Grid (3 rows, 1 column)
+     *        2.2.1 Pitch Row - Flexbox (1 row, n columns)
+     *        2.2.2 Duration Row - Flexbox (1 row, n columns)
+     *        2.2.3 Velocity Row - Flexbox (1 row, n columns)
+     * 3. Player
+     *
+     *
+     *
+     *
+     *
+     */
 
     return (
         <main className={cn("seqgen-ui", className)}>
@@ -58,16 +65,10 @@ export default function SeqGen({ className }: SeqGenProps) {
 
             <section className="seqgen-ui__tracks">
                 {/* -- labels -- */}
-                <div style={{ height: '16rem', width: '9rem' }}>
-                    <div className="seqgen-ui__track-label">
-                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Pitch</div>
-                    </div>
-                    <div className="seqgen-ui__track-label">
-                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Duration</div>
-                    </div>
-                    <div className="seqgen-ui__track-label">
-                        <div className="p-0 m-0 fs-4 fw-bold align-content-center text-end pe-1">Velocity</div>
-                    </div>
+                <div className="seqgen_ui__track-label-grid">
+                    <div className="seqgen-ui__track-label">Pitch</div>
+                    <div className="seqgen-ui__track-label">Duration</div>
+                    <div className="seqgen-ui__track-label">Velocity</div>
                 </div>
 
                 <div className="seqgen-ui__track">
@@ -76,7 +77,7 @@ export default function SeqGen({ className }: SeqGenProps) {
                             onClick={() => addPitch(0, 'before')}>+</div>
                         {pitches.map((pitch, index) => {
                             const pitchObj = new Pitch(pitch);
-                            const classes = cn(item_div_classes, "first-row", highlightSlot(index, pitches.length) ? 'highlighted' : '');
+                            const classes = cn("x", "first-row", highlightSlot(index, pitches.length) ? 'highlighted' : '');
                             return <>
                                 <div key={`${index}-${pitchObj.midiValue}`} className={classes}>
                                     <PitchSelector key={`${index}-${pitchObj.midiValue}`} slot={index} pitch={pitchObj}
@@ -92,7 +93,7 @@ export default function SeqGen({ className }: SeqGenProps) {
                             onClick={() => addDuration(0, 'before')}>+</div>
                         {durations.map((dur, dur_index) => {
                             const dur_obj = durationList[dur];
-                            const classes = cn(item_div_classes, "second-row", highlightSlot(dur_index, durations.length) ? 'highlighted' : '');
+                            const classes = cn("x", "second-row", highlightSlot(dur_index, durations.length) ? 'highlighted' : '');
                             return <>
                             <div key={`${dur_index}-${dur}`} className={classes}>
                                 <DurationSelector key={`${dur_index}-${dur}`} slot={dur_index}
@@ -107,7 +108,7 @@ export default function SeqGen({ className }: SeqGenProps) {
                         <div role="button" className="third-row align-content-center fade-in"
                             onClick={() => addVelocity(0, 'before')}>+</div>
                         {velocities.map((vel, vel_index) => {
-                            const classes = cn(item_div_classes, "third-row", highlightSlot(vel_index, velocities.length) ? 'highlighted' : '');
+                            const classes = cn("x", "third-row", highlightSlot(vel_index, velocities.length) ? 'highlighted' : '');
                             return <>
                                 <div key={`${vel_index}-${vel}`} className={classes}>
                                     <VelocitySelector key={`${vel_index}-${vel}`} slot={vel_index} value={vel}
