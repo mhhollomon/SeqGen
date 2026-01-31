@@ -13,7 +13,7 @@ export default function App() {
 
   return (
     <>
-        {/* This gets shifted up to the header by react */}
+        {/* These get shifted up to the header by react */}
         <title>{APP_NAME}</title>
         <link rel="icon" type="image/svg+xml" href={logo} />
 

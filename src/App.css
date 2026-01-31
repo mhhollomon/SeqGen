@@ -1,25 +1,3 @@
-.title-block {
-    margin-top: 1rem;
-    margin-left : 5rem;
-    margin-right : 5rem;
-}
-
-.title-block__title {
-    font-size: var(--font-size-h3);
-}
-
-:root {
-    --white : #fff;
-}
-.main {
-    margin-left : 5rem;
-    margin-right : 5rem;
-}
-
-
-.bg-gray {
-    color : var(--white);
-}
 
  .dialog-overlay {
     z-index: 1;
@@ -63,21 +41,6 @@
     margin-top: 1rem;
 }
 
-.pitch-grid-button {
-    display: inline-flex;
-    height: 2rem;
-	align-items: center;
-	justify-content: center;
-    width : 5rem;
-}
-
-.pitch-grid-button.selected {
-    color : var(--white);
-}
-
-.pitch-grid-button:hover {
-    color : var(--white);
-}
 
 .w-5rem {
     width: 5rem;

@@ -40,10 +40,10 @@ export default function SeqGen({ className }: SeqGenProps) {
      *    1.3 Reset
      * 2. Lanes - Flexbox (one row, 2 columns)
      *    2.1 Labels - Grid (3 rows, 1 column)
-     *    2.2 Tracks - Grid (3 rows, 1 column)
-     *        2.2.1 Pitch Row - Flexbox (1 row, n columns)
-     *        2.2.2 Duration Row - Flexbox (1 row, n columns)
-     *        2.2.3 Velocity Row - Flexbox (1 row, n columns)
+     *    2.2 Tracks - Grid (3 rows, n column)
+     *        2.2.1 Pitch Row  (1st row, n columns)
+     *        2.2.2 Duration Row  (2nd row, n columns)
+     *        2.2.3 Velocity Row  (3rd row, n columns)
      * 3. Player
      *
      *
@@ -80,38 +80,38 @@ export default function SeqGen({ className }: SeqGenProps) {
                                 <PitchSelector key={`${index}-${pitchObj.midiValue}`} slot={index} pitch={pitchObj}
                                     onChange={updatePitch} />
                             </div>
-                            <div className="lanes__add-value first-row"
+                            <div className="lanes__add-value values-place"
                                 onClick={() => addPitch(index, 'after')}>+</div>
                         </>
                     })}
 
 
-                    <div className="second-row align-content-center fade-in"
+                    <div className="lanes__add-value second-row"
                         onClick={() => addDuration(0, 'before')}>+</div>
                     {durations.map((dur, dur_index) => {
                         const dur_obj = durationList[dur];
-                        const classes = cn("x", "second-row", highlightSlot(dur_index, durations.length) ? 'highlighted' : '');
+                        const classes = cn("lanes__value", "second-row", highlightSlot(dur_index, durations.length) ? 'highlighted' : '');
                         return <>
                             <div key={`${dur_index}-${dur}`} className={classes}>
                                 <DurationSelector key={`${dur_index}-${dur}`} slot={dur_index}
                                     list={durationList} value={dur_obj} onChange={updateDuration} />
                             </div>
-                            <div className="second-row align-content-center fade-in"
+                            <div className="lanes__add-value second-row"
                                 onClick={() => addDuration(dur_index, 'after')}>+</div>
                         </>
 
                     })}
 
-                    <div role="button" className="third-row align-content-center fade-in"
+                    <div role="button" className="lanes__add-value third-row"
                         onClick={() => addVelocity(0, 'before')}>+</div>
                     {velocities.map((vel, vel_index) => {
-                        const classes = cn("x", "third-row", highlightSlot(vel_index, velocities.length) ? 'highlighted' : '');
+                        const classes = cn("lanes__value", "third-row", highlightSlot(vel_index, velocities.length) ? 'highlighted' : '');
                         return <>
                             <div key={`${vel_index}-${vel}`} className={classes}>
                                 <VelocitySelector key={`${vel_index}-${vel}`} slot={vel_index} value={vel}
                                     onChange={updateVelocity} />
                             </div>
-                            <div role="button" className="third-row align-content-center justify-items-center fade-in"
+                            <div role="button" className="lanes__add-value third-row"
                                 onClick={() => addVelocity(vel_index, 'after')}>+</div>
 
 

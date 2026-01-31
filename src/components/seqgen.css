@@ -56,6 +56,25 @@
 .lanes__value {
     align-self: center;
     justify-self: center;
+
+    /* HERE - This should be a 2 by 2 grid with the first column
+       being small and the second having the button with the value */
+    display: grid;
+    grid-template-columns: 0.5rem 1fr;
+    grid-template-rows: calc(var(--track-height) - 1em) 1em;
+    grid-template-areas:
+        "value add-value"
+        "remove-value empty";
+}
+
+.value-place {
+    grid-area: value;
+}
+.remove-value-place {
+    grid-area: remove-value;
+}
+.add-value-place {
+    grid-area: add-value;
 }
 
 .lanes__add-value {
@@ -74,6 +93,7 @@
 }
 
 
+/* Utility classes to make sure the values are on the correct row */
 .first-row {
     grid-row : 1;
 }
