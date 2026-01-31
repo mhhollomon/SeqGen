@@ -1,0 +1,15 @@
+.pitch-grid-button {
+    display: inline-flex;
+    height: 2rem;
+	align-items: center;
+	justify-content: center;
+    width : 5rem;
+}
+
+.pitch-grid-button.selected {
+    color : var(--white);
+}
+
+.pitch-grid-button:hover {
+    color : var(--white);
+}
