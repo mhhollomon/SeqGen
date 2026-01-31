@@ -1,33 +1,37 @@
 import { Popover, Slider } from "radix-ui";
 import { useState } from "react";
 import * as icons from "~/icons"
+import "./velocitySelector.css"
 
 import { useConditionalMouseMove, type mousePositionType } from "~/hooks/useConditionalMouseMove";
-export type VelocitySliderProps = {
+import { cn } from "~/utils";
+
+export type VelocitySelectorProps = {
     slot: number;
     value: number;
+    className?: string;
     onChange: (slot: number, value: number) => void;
 }
 
-export default function VelocitySlider({ slot, value, onChange }: VelocitySliderProps) {
+export default function VelocitySelector({ slot, value, className,onChange }: VelocitySelectorProps) {
     const [localValue, setLocalValue] = useState(value);
-    const [startPosition, setStartPosition] = useState<mousePositionType>({ x: 1, y: 1, ts : 0 });
+    const [startPosition, setStartPosition] = useState<mousePositionType>({ x: 1, y: 1, ts: 0 });
     const [isDragging, setIsDragging] = useState(false);
 
     const mousePosition = useConditionalMouseMove(isDragging, mouseUp);
 
-    function computeDragValue( newPos : mousePositionType = mousePosition) {
-        let temp = isDragging && (newPos.y > 0)?  Math.trunc(value + (startPosition.y - newPos.y)/2.0) : value;
+    function computeDragValue(newPos: mousePositionType = mousePosition) {
+        let temp = isDragging && (newPos.y > 0) ? Math.trunc(value + (startPosition.y - newPos.y) / 2.0) : value;
         temp = temp < 0 ? 0 : temp;
         temp = temp > 127 ? 127 : temp;
         return temp;
     }
     const dragValue = computeDragValue();
 
-    function mouseUp(lastPos : mousePositionType ) {
+    function mouseUp(lastPos: mousePositionType) {
         console.log(`mouseUp on ${lastPos.ts} startPosition.ts: ${startPosition.ts}`);
         setIsDragging(false);
-        if (lastPos.ts - startPosition.ts  > 100) {
+        if (lastPos.ts - startPosition.ts > 100) {
             const newValue = computeDragValue(lastPos);
             console.log(`mouseUp calling onChange with ${newValue}`);
             onChange(slot, newValue);
@@ -40,16 +44,16 @@ export default function VelocitySlider({ slot, value, onChange }: VelocitySlider
 
     function StartDrag(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         console.log(`mouseDown on ${e.target}`);
-        setStartPosition({ x: e.clientX, y: e.clientY, ts : e.timeStamp });
+        setStartPosition({ x: e.clientX, y: e.clientY, ts: e.timeStamp });
         setIsDragging(true);
     }
 
- return (
+    return (
         <Popover.Root >
             <Popover.Trigger asChild>
-                <button className="bg-body border rounded w-5rem" aria-label="Set Velocity"
+                <button className={cn("velocity-sel__button", className)} aria-label="Set Velocity"
                     onMouseDown={(e) => StartDrag(e)}
-                    >
+                >
                     {isDragging ? dragValue : value}
                 </button>
             </Popover.Trigger>
@@ -81,5 +85,4 @@ export default function VelocitySlider({ slot, value, onChange }: VelocitySlider
             </Popover.Portal>
         </Popover.Root>
     );
-
 }

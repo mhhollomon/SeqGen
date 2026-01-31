@@ -39,34 +39,46 @@
 
 
 .lanes__tracks-wrapper {
-        display: grid;
-        width: 100%;
-        overflow-x : scroll;
-        overflow-y : hidden;
+    display: grid;
+    width: 100%;
+    overflow-x : scroll;
+    overflow-y : hidden;
 
-        grid-row-gap: var(--row-gap);
-        grid-column-gap: 0.5rem;
-        margin-inline: 1rem;
-        /* The track is an alternating set of small columns (for the '+' buttons)
-           and larger columns (for the pitch, duration, velocity values) */
-        grid-template-columns: 0.5rem repeat(auto-fill, 5rem 0.5rem);
-        grid-template-rows: repeat(3, var(--track-height));
+    grid-row-gap: var(--row-gap);
+    grid-column-gap: 0.5rem;
+    margin-inline: 0.5rem;
+    padding-inline: 0.5rem;
+    grid-template-columns: 0.5rem;
+    grid-auto-columns: 6rem;
+    grid-template-rows: repeat(3, var(--track-height));
 }
 
 .lanes__value {
-    align-self: center;
-    justify-self: center;
+    place-self: center;
 
-    /* HERE - This should be a 2 by 2 grid with the first column
-       being small and the second having the button with the value */
+    /* This should be a 2 by 2 grid with the second column
+       being small and the first having the button with the value */
     display: grid;
-    grid-template-columns: 0.5rem 1fr;
-    grid-template-rows: calc(var(--track-height) - 1em) 1em;
+    grid-template-columns: 5rem 0.5rem ;
+    grid-template-rows: 2.5em 1em;
+    grid-column-gap: 0.5rem;
     grid-template-areas:
         "value add-value"
         "remove-value empty";
 }
 
+.remove-button {
+    place-self: center;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 0.8rem;
+
+    &:hover  {
+        opacity: 1;
+        transform: scale(2, 2);
+    }
+
+}
 .value-place {
     grid-area: value;
 }
@@ -77,13 +89,12 @@
     grid-area: add-value;
 }
 
+/* The '+' button to add a value */
 .lanes__add-value {
     cursor: pointer;
-    opacity: 0.25;
+    opacity: 0.5;
     font-size: 0.8rem;
-	align-self: center;
-	justify-self: center;
-
+	place-self: center;
 
     &:hover  {
         opacity: 1;
@@ -92,17 +103,21 @@
 
 }
 
+.lanes__add-value--first {
+    margin-block-end : 1rem;
+}
+
 
 /* Utility classes to make sure the values are on the correct row */
-.first-row {
+.pitch-lane {
     grid-row : 1;
 }
 
-.second-row {
+.duration-lane {
     grid-row : 2;
 }
 
-.third-row {
+.velocity-lane {
     grid-row : 3;
 }
 
