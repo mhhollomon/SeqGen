@@ -3,17 +3,17 @@
     margin-inline : 10vw;
 }
 
-.seqgen-ui__settings {
+.top-actions {
     display : grid;
     grid-template-columns : 1fr 2fr 1fr;
     column-gap : 1rem;
 }
 
-.seqgen-ui__reset {
+.top-actions__reset {
     justify-self: end;
 }
 
-.seqgen-ui__tracks {
+.lanes {
     --track-height : 5rem;
     --row-gap : 1rem;
     display : grid;
@@ -21,23 +21,14 @@
     margin-block-start : 2rem;
 }
 
-.seqgen_ui__track-label-grid {
+.lanes__label-wrapper {
     display : grid;
     grid-template-columns: 9rem;
     grid-template-rows: repeat(3, var(--track-height));
     row-gap: var(--row-gap);
 }
 
-.seqgen-ui__track {
-    display : flex;
-    flex-direction : row;
-    width : 100%;
-    overflow-x : scroll;
-    overflow-y : hidden;
-
-}
-
-.seqgen-ui__track-label {
+.lanes__label {
         border-right: 3px solid black;
         padding-block : 1rem;
         font-weight : 700;
@@ -46,13 +37,54 @@
         align-content: center;
 }
 
-.seqgen-ui__track-grid {
+
+.lanes__tracks-wrapper {
         display: grid;
         width: 100%;
-        grid-gap: var(--row-gap) 0.5rem;
-        margin-right: 1rem;
-        grid-template-columns: 0.5rem repeat(auto-fill, 6rem 0.5rem);
+        overflow-x : scroll;
+        overflow-y : hidden;
+
+        grid-row-gap: var(--row-gap);
+        grid-column-gap: 0.5rem;
+        margin-inline: 1rem;
+        /* The track is an alternating set of small columns (for the '+' buttons)
+           and larger columns (for the pitch, duration, velocity values) */
+        grid-template-columns: 0.5rem repeat(auto-fill, 5rem 0.5rem);
         grid-template-rows: repeat(3, var(--track-height));
 }
+
+.lanes__value {
+    align-self: center;
+    justify-self: center;
+}
+
+.lanes__add-value {
+    cursor: pointer;
+    opacity: 0.25;
+    font-size: 0.8rem;
+	align-self: center;
+	justify-self: center;
+
+
+    &:hover  {
+        opacity: 1;
+        transform: scale(2, 2);
+    }
+
+}
+
+
+.first-row {
+    grid-row : 1;
+}
+
+.second-row {
+    grid-row : 2;
+}
+
+.third-row {
+    grid-row : 3;
+}
+
 
 

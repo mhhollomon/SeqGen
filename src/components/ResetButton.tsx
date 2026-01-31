@@ -1,10 +1,14 @@
 import useGlobalStore from "~/globalStore";
 import * as icons from "~/icons";
 
-export default function ResetButton() {
+export type ResetButtonProps = {
+    className : string
+}
+
+export default function ResetButton({className }: ResetButtonProps) {
     const { reset } = useGlobalStore();
     return (
-        <button className="btn btn-warning ms-2 float-end" disabled={false}
+        <button className={className} type="button" disabled={false}
             onClick={reset}>{icons.x}Reset</button>
     );
 }

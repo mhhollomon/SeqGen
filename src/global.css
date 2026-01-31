@@ -6,6 +6,8 @@
     --clr-bg : white;
 
     --clr-brand :#2d471e;
+    --clr-warning : #fcc500;
+
     --clr-accent : var(--clr-brand);
 
     --border-radius : .5rem;
